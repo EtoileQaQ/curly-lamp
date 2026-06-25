@@ -13,15 +13,48 @@ const fetchWithoutCompression: typeof fetch = async (input, init) => {
 };
 
 /**
- * Client Anthropic partagé. La clé est lue dans .env.local (ANTHROPIC_API_KEY).
- * Ne jamais appeler ce client côté navigateur : uniquement dans les routes API
- * ou les server actions.
+ * Initialisation paresseuse du client Anthropic.
+ *
+ * IMPORTANT : on ne crée PAS le client au chargement du module. Pendant le build
+ * (étape "Collecting page data"), Next.js importe ce fichier ; si on instanciait
+ * `new Anthropic(...)` ici avec une clé absente, le SDK lèverait une exception
+ * et ferait échouer le build. On diffère donc la création jusqu'au premier usage
+ * réel (au runtime, dans une route API ou une server action).
  */
-export const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-  timeout: 60_000, // 60 s max par requête
-  maxRetries: 3, // retente automatiquement en cas de coupure réseau
-  fetch: fetchWithoutCompression,
+let cachedAnthropic: Anthropic | null = null;
+
+function getAnthropic(): Anthropic {
+  if (cachedAnthropic) return cachedAnthropic;
+
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    throw new Error(
+      "ANTHROPIC_API_KEY manquant : configure-le dans les variables d'environnement (Vercel) ou dans .env.local"
+    );
+  }
+
+  cachedAnthropic = new Anthropic({
+    apiKey,
+    timeout: 60_000, // 60 s max par requête
+    maxRetries: 3, // retente automatiquement en cas de coupure réseau
+    fetch: fetchWithoutCompression,
+  });
+
+  return cachedAnthropic;
+}
+
+/**
+ * Client Anthropic partagé. Ne jamais l'appeler côté navigateur : uniquement
+ * dans les routes API ou les server actions. C'est un Proxy : le vrai client
+ * n'est créé qu'au premier accès, ce qui rend le build insensible à une clé
+ * manquante tout en gardant l'API habituelle (`anthropic.messages.create(...)`).
+ */
+export const anthropic: Anthropic = new Proxy({} as Anthropic, {
+  get(_target, prop) {
+    const client = getAnthropic();
+    const value = Reflect.get(client, prop, client);
+    return typeof value === "function" ? value.bind(client) : value;
+  },
 });
 
 // Le modèle utilisé partout dans Echo. Pour en changer, modifie cette seule ligne.
