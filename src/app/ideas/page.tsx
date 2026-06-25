@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Sparkles,
@@ -46,6 +46,25 @@ const ANGLE_LABELS: Record<IdeaAngle, string> = {
 };
 
 export default function IdeasPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen overflow-x-hidden bg-card pb-28 text-foreground md:pb-0">
+          <AppHeader />
+          <section className="mx-auto w-full max-w-5xl p-4 md:px-6 md:py-10 lg:px-8">
+            <div className="rounded-2xl border border-border bg-background p-6 text-center text-sm text-muted-foreground">
+              Chargement des idées…
+            </div>
+          </section>
+        </main>
+      }
+    >
+      <IdeasPageContent />
+    </Suspense>
+  );
+}
+
+function IdeasPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const preselectedZone = searchParams.get("zone")?.trim() ?? "";
