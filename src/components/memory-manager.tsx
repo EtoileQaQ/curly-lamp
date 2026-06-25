@@ -66,7 +66,7 @@ export function MemoryManager({ entries }: { entries: MemoryEntry[] }) {
     });
   }
 
-  function useExample(ex: { category: string; content: string }) {
+  function applyExample(ex: { category: string; content: string }) {
     setCategory(ex.category);
     setContent(ex.content);
     setError(null);
@@ -179,7 +179,7 @@ export function MemoryManager({ entries }: { entries: MemoryEntry[] }) {
               {EXAMPLES.map((ex, i) => (
                 <button
                   key={i}
-                  onClick={() => useExample(ex)}
+                  onClick={() => applyExample(ex)}
                   className="rounded-xl border border-border bg-card p-3 text-sm transition hover:border-primary/40 hover:bg-primary/5"
                 >
                   <span className="font-semibold text-primary">

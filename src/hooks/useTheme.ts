@@ -72,7 +72,7 @@ export function useTheme() {
       }
     }
 
-    applyTheme(theme);
+    applyTheme(getCachedTheme());
     loadTheme();
 
     return () => {
