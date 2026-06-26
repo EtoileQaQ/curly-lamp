@@ -61,13 +61,12 @@ export default function Home() {
         </div>
         <div className="mx-auto max-w-3xl">
           <h1 className="mx-auto mt-8 max-w-2xl text-[32px] font-medium leading-tight md:text-[48px]">
-            1 mois de posts LinkedIn.{" "}
-            <span className="text-[#6c63ff]">30 minutes.</span>
-            {" "}Ton style.
+          La page blanche du lundi,{" "}
+            <span className="text-[#6c63ff]"> c'est terminé.</span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-[480px] text-[#666]">
-            Publie régulièrement. Attire les bonnes personnes. Développe ce que tu construis.
+          Echo trouve les idées, structure le message et rédige dans ton style. Tu n&apos;as plus qu&apos;à publier.
           </p>
 
           <div className="mx-auto mt-8 flex max-w-md flex-col items-center justify-center gap-3 sm:flex-row">
@@ -81,19 +80,19 @@ export default function Home() {
               href="/#demo"
               className="w-full rounded-lg border border-[#e5e5e5] px-6 py-3 text-center font-semibold text-[#111] transition hover:bg-[#f8f8f8] sm:w-auto"
             >
-              Voir un exemple
+              Voir comment ça marche
             </a>
           </div>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[#666]">
             <span className="flex items-center gap-1.5">
-              <span className="text-[#6c63ff]">✓</span> Annulation à tout moment
+              <span className="text-[#6c63ff]">✓</span> 4 posts gratuits pour tester
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="text-[#6c63ff]">✓</span> Résultats en 5 min
+              <span className="text-[#6c63ff]">✓</span> Résultats en moins de 10 min
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="text-[#6c63ff]">✓</span> Sans CB pour l&apos;essai
+              <span className="text-[#6c63ff]">✓</span> Sans carte bancaire
             </span>
           </div>
         </div>
@@ -108,26 +107,25 @@ export default function Home() {
           {/* Bloc douleur */}
           <div className="text-center">
             <span className="text-sm font-semibold uppercase tracking-wide text-[#6c63ff]">
-              Le vrai problème
+            Ce que tu vis chaque semaine
             </span>
             <h2 className="mx-auto mt-3 max-w-2xl text-3xl font-medium md:text-4xl">
-              Tu sais que LinkedIn peut tout changer.
+            Tu sais que tu devrais publier.
               <br />
-              Mais tu n&apos;arrives pas à t&apos;y tenir.
+              Mais ça ne se fait jamais.
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-[#666]">
-              Ce n&apos;est pas un manque de volonté. C&apos;est que poster
-              régulièrement, bien, et sans y passer des heures, c&apos;est presque
-              impossible seul.
+            Ce n&apos;est pas un manque de volonté. 
+            C&apos;est que passer de "je devrais publier" à un vrai post demande beaucoup plus d&apos;énergie que ça n&apos;en a l&apos;air.
             </p>
           </div>
 
           <div className="mx-auto mt-10 grid max-w-3xl gap-3 sm:grid-cols-2">
             {[
-              "Chaque semaine, tu te promets d'être plus actif. Chaque semaine, LinkedIn repasse au second plan.",
-              "Tu as des choses à dire, mais elles restent floues au moment d'écrire.",
-              "Quand tu passes par une IA générique, le texte pourrait venir de n'importe qui.",
-              "À compétence égale, c'est souvent celui qui est visible qui gagne.",
+              "Je devrais publier quelque chose cette semaine.",
+              "Mais sur quoi ? Je ne vois pas d'angle",
+              "Bon, je verrai ça demain.",
+              "Je n'ai rien publié. Encore."",
             ].map((pain, i) => (
               <Reveal key={pain} delay={i * 100}>
                 <div className="flex h-full items-start gap-3 rounded-xl border-[0.5px] border-[#e5e5e5] bg-[#f8f8f8] p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
@@ -136,6 +134,15 @@ export default function Home() {
                   </span>
                   <p className="text-sm text-[#444]">{pain}</p>
                 </div>
+            
+            <div className="text-center">
+            <p className="mx-auto mt-4 max-w-xl text-[#666]">
+            Ce n&apos;est pas que tu n&apos;as rien à dire. C&apos;est qu'il n&apos;y a personne pour te poser la bonne question au bon moment.
+            </p>
+            <span className="text-sm font-semibold uppercase tracking-wide text-[#6c63ff]">
+            Echo fait exactement ça.
+            </span>
+          </div>
               </Reveal>
             ))}
           </div>
@@ -143,15 +150,15 @@ export default function Home() {
           {/* Comment ça marche — 3 étapes concrètes */}
           <div className="mt-24 text-center">
             <span className="text-sm font-semibold uppercase tracking-wide text-[#6c63ff]">
-              Comment ça marche
+            Ce qu&apos;Echo change dès la première session
             </span>
             <h2 className="mt-3 text-3xl font-medium md:text-4xl">
-              Tu passes d&apos;une idée floue à un post prêt à publier.
+            Tu arrives sans idée. Tu repars avec un post prêt.
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-[#666]">
-              Pas besoin de devenir copywriter, ni de passer deux heures à
-              discuter avec ChatGPT. Echo te guide jusqu&apos;à un contenu clair,
-              personnel et exploitable.
+            La première chose qu&apos;Echo fait quand tu n&apos;as rien en tête : te proposer 9 idées adaptées à ton métier, ta cible et tes sujets passés.
+            Tu choisis une direction. Il te pose deux ou trois questions pour que le post soit concret et personnel. Puis il rédige dans ton style.
+            En moins de 10 minutes, de zéro à prêt à publier.
             </p>
           </div>
 
@@ -160,17 +167,17 @@ export default function Home() {
               {
                 step: "1",
                 title: "Tu poses le point de départ",
-                desc: "Une idée, une anecdote, un article ou un sujet que tu veux défendre. Même si c'est encore brouillon, Echo sait par où commencer.",
+                desc: "Pas besoin d'arriver avec un sujet. Pas besoin de passer deux heures à reformuler ce qu'une IA générique t'a rendu.",
               },
               {
                 step: "2",
-                title: "Echo trouve le bon angle",
-                desc: "Il clarifie ton message, fait ressortir ce qui est intéressant et te demande les précisions utiles pour éviter le post plat ou générique.",
+                title: "Echo pose les bonnes questions",
+                desc: "Pour éviter le post vide ou générique, il te demande une anecdote, un chiffre, une position. Ce que tu sais, mais que tu n'aurais pas pensé à mettre.",
               },
               {
                 step: "3",
                 title: "Tu publies avec confiance",
-                desc: "Tu récupères un post structuré, fidèle à ton ton et facile à ajuster. Tu gagnes du temps sans sacrifier ta personnalité.",
+                desc: "Tu récupères un post structuré, fidèle à ton style et facile à ajuster. Tu copies, tu publies quand tu veux.",
               },
             ].map((s, i) => (
               <Reveal key={s.step} delay={i * 120}>
@@ -193,10 +200,10 @@ export default function Home() {
               </h3>
               <ul className="mt-4 space-y-3">
                 {[
-                  "Tu perds du temps à chercher une idée, puis encore du temps à l'écrire.",
-                  "Tu finis par publier moins souvent que prévu, même quand tu as des choses à dire.",
-                  "Tes posts générés par IA sonnent propres, mais interchangeables.",
-                  "Tu hésites avant de publier parce que le texte ne ressemble pas vraiment à toi.",
+                  "Tu bloques devant la page blanche. Tu fermes l'onglet.",
+                  "Tu publies deux fois par mois, dans le meilleur des cas.",
+                  "Tes posts IA sonnent propres, mais interchangeables.",
+                  "Tu hésites avant de publier parce que "ça ne te ressemble pas vraiment"",
                 ].map((t) => (
                   <li key={t} className="flex items-start gap-3 text-sm text-[#666]">
                     <span className="mt-0.5 text-[#ef4444]">–</span>
@@ -215,7 +222,7 @@ export default function Home() {
               </h3>
               <ul className="mt-4 space-y-3">
                 {[
-                  "Tu transformes une idée brouillon en post clair sans repartir de zéro.",
+                  "Tu arrives sans idée. En un clic, tu en as 9. Tu choisis.",
                   "Tu publies plus régulièrement parce que le plus dur est déjà fait.",
                   "Echo s'appuie sur tes expériences pour éviter le contenu générique.",
                   "Tu gardes le dernier mot avant publication, avec un texte prêt à ajuster.",
@@ -262,28 +269,28 @@ export default function Home() {
           <div className="mt-10 space-y-3">
             {[
               {
+                q: "Je n'ai vraiment aucune idée de quoi publier. Echo peut m'aider ?",
+                a: "C'est exactement le cas d'usage principal. Echo commence par te proposer 9 idées adaptées à ton métier, ta cible et tes sujets passés. Tu n'as pas à arriver avec quoi que ce soit.",
+              },
+              {
                 q: "Est-ce que mes posts vont sonner comme de l'IA ?",
-                a: "Echo réduit ce risque en s'appuyant sur ta mémoire : anecdotes, positions, expertise et anciens posts. Si la matière manque, il te pose des questions avant de générer.",
+                a: "Echo réduit ce risque en s'appuyant sur ta mémoire éditoriale : anecdotes, positions, style et anciens posts. Quand la matière manque, il te pose des questions avant de générer — plutôt que de remplir avec du vide.",
               },
               {
-                q: "Combien de temps ça me prend vraiment ?",
-                a: "L'onboarding prend quelques minutes. Ensuite, générer un post est rapide : tu choisis une idée, Echo vérifie la matière, puis rédige en direct.",
+                q: "Combien de temps ça prend vraiment ?",
+                a: "L'onboarding dure quelques minutes. Ensuite, générer un post prend moins de 10 minutes du départ à la relecture.",
               },
               {
-                q: "En quoi c'est différent de ChatGPT ?",
-                a: "Echo garde une mémoire éditoriale modifiable, détecte quand une idée est trop vague, t'évite les posts génériques et structure tes contenus pour LinkedIn.",
+                q: "C'est quoi la différence avec ChatGPT ?",
+                a: "Echo retient ton style et tes sujets déjà traités. Il détecte quand une idée est trop vague, te pose des questions pour éviter le contenu générique, et mesure le dwell time de ton post avant que tu publies.",
               },
               {
-                q: "Et si je ne sais pas quoi écrire ?",
-                a: "Echo te propose 9 idées adaptées à ton métier et à ta cible, en un clic. Tu peux aussi coller un article, des notes ou un transcript : il en fait un post.",
-              },
-              {
-                q: "Est-ce que ça publie automatiquement sur LinkedIn ?",
-                a: "Non, tu gardes le contrôle total. Echo prépare le texte et le visuel ; tu copies-colles et tu publies quand tu le souhaites.",
+                q: "Est-ce que ça publie directement sur LinkedIn ?",
+                a: "Non. Tu gardes le contrôle total. Echo prépare le texte et le visuel : tu copies, tu publies quand tu veux",
               },
               {
                 q: "Je peux annuler quand je veux ?",
-                a: "Oui. Les abonnés peuvent gérer et annuler leur abonnement depuis le portail Stripe, accessible directement dans l'application.",
+                a: "Oui. Les abonnés peuvent gérer et annuler leur abonnement à tout moment, directement depuis l'application.",
               },
               {
                 q: "Mes données sont-elles en sécurité ?",
