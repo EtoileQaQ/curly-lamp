@@ -12,14 +12,17 @@ export const metadata: Metadata = {
 
 const VALUES = [
   {
+    icon: "01",
     title: "Ta voix d'abord",
     desc: "Tu n'as pas besoin d'écrire comme tout le monde pour être visible. Echo t'aide à mettre en valeur ce qui te rend unique, au lieu de lisser ton style.",
   },
   {
+    icon: "02",
     title: "Ton temps a de la valeur",
     desc: "Ton expertise mérite d'être partagée, pas de te coûter toutes tes soirées. Echo réduit le temps passé à écrire pour que tu puisses te concentrer sur ton activité.",
   },
   {
+    icon: "03",
     title: "Des promesses réalistes",
     desc: "Pas de promesses magiques. L'objectif d'Echo est simple : t'aider à publier plus facilement, plus régulièrement et avec des contenus qui te ressemblent vraiment.",
   },
@@ -37,15 +40,15 @@ export default function AProposPage() {
             Notre mission
           </span>
           <h1 className="mx-auto mt-3 max-w-2xl text-4xl font-medium leading-tight md:text-5xl">
-          Tu as des idées, des expériences et une expertise qui méritent d'être vues.
+          Tu as des idées, des expériences et une expertise qui méritent d&apos;être vues.
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-[#666]">
-          Tu n'as pas besoin d'avoir une liste d'idées pour publier sur LinkedIn. 
-          Tu as déjà la matière. Echo t'aide à la retrouver, à l'organiser et à la transformer en publications qui te ressemblent.
+          Tu n&apos;as pas besoin d&apos;avoir une liste d&apos;idées pour publier sur LinkedIn. 
+          Tu as déjà la matière. Echo t&apos;aide à la retrouver, à l&apos;organiser et à la transformer en publications qui te ressemblent.
           </p>
           <p className="mx-auto mt-6 max-w-xl text-[#666]">
           Echo existe pour que tu puisses prendre la parole sur LinkedIn sans y consacrer tes soirées, 
-          sans devenir copywriter et sans avoir l'impression de publier des textes écrits par quelqu'un d'autre.
+          sans devenir copywriter et sans avoir l&apos;impression de publier des textes écrits par quelqu&apos;un d&apos;autre.
           </p>
         </div>
       </section>
@@ -59,23 +62,23 @@ export default function AProposPage() {
             </h2>
             <div className="mt-5 space-y-4 text-[#666]">
               <p>
-                Aujourd'hui, une grande partie des opportunités professionnelles naissent sur LinkedIn : 
+                Aujourd&apos;hui, une grande partie des opportunités professionnelles naissent sur LinkedIn : 
                 nouveaux clients, recrutements, partenariats ou invitations.
               </p>
               <p>
-              Le problème, c'est que publier régulièrement demande du temps, 
-              de l'énergie et une discipline que peu de personnes peuvent maintenir sur la durée.
+              Le problème, c&apos;est que publier régulièrement demande du temps, 
+              de l&apos;énergie et une discipline que peu de personnes peuvent maintenir sur la durée.
               </p>
               <p>
               Tu peux utiliser une IA généraliste, mais elle repart de zéro à chaque conversation.
-              Tu peux faire appel à un ghostwriter, mais cela représente un budget important et demande malgré tout beaucoup d'échanges.
+              Tu peux faire appel à un ghostwriter, mais cela représente un budget important et demande malgré tout beaucoup d&apos;échanges.
               </p>
               <p>
-              Echo a été conçu pour t'offrir une troisième voie.
+              Echo a été conçu pour t&apos;offrir une troisième voie.
               </p>
               <p>
               Au lieu de générer un texte impersonnel, Echo apprend progressivement à te connaître : 
-              ta façon de t'exprimer, tes convictions, tes anecdotes et les sujets qui comptent pour toi.
+              ta façon de t&apos;exprimer, tes convictions, tes anecdotes et les sujets qui comptent pour toi.
               </p>
               <p>
               Tu écris plus vite, tu restes fidèle à ta voix et tu peux publier avec régularité sans repartir de zéro à chaque fois.
