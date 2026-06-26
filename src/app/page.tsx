@@ -251,8 +251,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7bis. Section FAQ (traitement des objections — après les tarifs) */}
-      <section className="bg-white px-6 py-20">
+      {/* 7. Section FAQ */}
+      <section className="bg-[#f8f8f8] px-6 py-20">
         <div className="mx-auto max-w-3xl">
           <div className="text-center">
             <span className="text-sm font-semibold uppercase tracking-wide text-[#6c63ff]">
@@ -310,11 +310,8 @@ export default function Home() {
             ))}
           </div>
 
-          {/* 7. Section Tarifs */}
-          <PricingSection />
-
           {/* CTA de section */}
-          <div className="mt-10 rounded-2xl bg-[#f8f8f8] p-8 text-center">
+          <div className="mt-10 rounded-2xl bg-white p-8 text-center">
             <p className="text-lg font-medium text-[#111]">
               Encore un doute ? Le plus simple, c&apos;est d&apos;essayer.
             </p>
@@ -332,7 +329,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8. Section Témoignages */}
+      {/* 8. Section Tarifs */}
+      <PricingSection />
+
+      {/* 9. Section Témoignages */}
       <section id="demo" className="bg-[#f8f8f8] px-6 py-20">
         <div className="mx-auto max-w-5xl">
           <div className="text-center">
@@ -390,7 +390,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 9. Section CTA Final */}
+      {/* 10. Section CTA Final */}
       <section className="bg-[#1a1a2e] px-6 py-20 text-center text-white">
         <div className="mx-auto max-w-2xl">
           <h2 className="text-3xl font-medium md:text-4xl">
