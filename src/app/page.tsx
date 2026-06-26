@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BackToTop } from "@/components/back-to-top";
 import { LinkedInPostMockup } from "@/components/linkedin-post-mockup";
 import { PricingSection } from "@/components/pricing-section";
+import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
 
@@ -93,6 +94,27 @@ function SectionTitle({
 export default function Home() {
   return (
     <div className="min-h-screen bg-white text-[#12101f]">
+      <style>{`
+        @keyframes echo-fade-up {
+          from {
+            opacity: 0;
+            transform: translateY(18px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes echo-soft-float {
+          0%, 100% {
+            transform: translate3d(0, 0, 0) scale(1);
+          }
+          50% {
+            transform: translate3d(0, -14px, 0) scale(1.03);
+          }
+        }
+      `}</style>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 border-b border-[#e5e2ff] bg-white px-6">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between">
@@ -131,26 +153,28 @@ export default function Home() {
       </nav>
 
       {/* Hero */}
-      <section className="bg-[#12101f] px-6 py-20 text-center md:py-24">
+      <section className="relative overflow-hidden bg-[#12101f] px-6 py-20 text-center md:py-24">
+        <div className="pointer-events-none absolute left-1/2 top-12 h-72 w-72 -translate-x-1/2 rounded-full bg-[#6c63ff]/20 blur-3xl [animation:echo-soft-float_7s_ease-in-out_infinite]" />
+        <div className="pointer-events-none absolute -right-20 bottom-8 h-52 w-52 rounded-full bg-indigo-500/10 blur-3xl [animation:echo-soft-float_9s_ease-in-out_infinite]" />
         <div className="mx-auto max-w-3xl">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#6c63ff]/30 bg-[#6c63ff]/15 px-4 py-1.5 text-xs font-bold tracking-wide text-[#b8b4ff]">
+          <div className="relative mb-8 inline-flex items-center gap-2 rounded-full border border-[#6c63ff]/30 bg-[#6c63ff]/15 px-4 py-1.5 text-xs font-bold tracking-wide text-[#b8b4ff] opacity-0 [animation:echo-fade-up_700ms_ease-out_100ms_forwards]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#6c63ff]" />
             Lancement en cours · Accès anticipé
           </div>
 
-          <h1 className="text-4xl font-black leading-[1.08] tracking-tight text-white md:text-6xl">
+          <h1 className="relative text-4xl font-black leading-[1.08] tracking-tight text-white opacity-0 [animation:echo-fade-up_800ms_ease-out_220ms_forwards] md:text-6xl">
             La page blanche du lundi,
             <br />
             <span className="text-[#6c63ff]">c&apos;est terminé.</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-400">
+          <p className="relative mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-400 opacity-0 [animation:echo-fade-up_800ms_ease-out_340ms_forwards]">
             Echo trouve les idées, structure le message et rédige dans ton style.
             <br />
             Tu n&apos;as plus qu&apos;à publier.
           </p>
 
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="relative mt-9 flex flex-col items-center justify-center gap-3 opacity-0 [animation:echo-fade-up_800ms_ease-out_460ms_forwards] sm:flex-row">
             <Button asChild size="lg">
               <Link href="/sign-up">Générer mes 4 premiers posts →</Link>
             </Button>
@@ -164,14 +188,18 @@ export default function Home() {
             </Button>
           </div>
 
-          <p className="mt-6 text-sm text-slate-600">
+          <p className="relative mt-6 text-sm text-slate-600 opacity-0 [animation:echo-fade-up_800ms_ease-out_560ms_forwards]">
             ✓ 4 posts gratuits pour tester · ✓ Résultats en 10 min · ✓ Sans
             carte bancaire
           </p>
 
-          <div className="mx-auto mt-12 grid max-w-xl grid-cols-2 gap-6 border-t border-[#2a2450] pt-8 sm:grid-cols-4">
-            {HERO_STATS.map((stat) => (
-              <div key={stat.label}>
+          <div className="relative mx-auto mt-12 grid max-w-xl grid-cols-2 gap-6 border-t border-[#2a2450] pt-8 sm:grid-cols-4">
+            {HERO_STATS.map((stat, index) => (
+              <div
+                key={stat.label}
+                className="opacity-0 [animation:echo-fade-up_700ms_ease-out_forwards]"
+                style={{ animationDelay: `${650 + index * 90}ms` }}
+              >
                 <div className="text-3xl font-black text-[#6c63ff]">
                   {stat.value}
                 </div>
@@ -184,7 +212,7 @@ export default function Home() {
 
       {/* Pain mirror */}
       <section className="border-t-4 border-[#6c63ff] bg-white px-6 py-16">
-        <div className="mx-auto max-w-2xl">
+        <Reveal className="mx-auto max-w-2xl">
           <Label>Ce que tu vis chaque semaine</Label>
           <SectionTitle>
             Tu sais que tu devrais publier.
@@ -230,45 +258,49 @@ export default function Home() {
           <Button asChild className="mt-8">
             <Link href="/sign-up">Arrêter la page blanche →</Link>
           </Button>
-        </div>
+        </Reveal>
       </section>
 
       {/* Post mockups */}
       <section id="fonctionnalites" className="bg-[#f8f7ff] px-6 py-20">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-12 text-center">
+          <Reveal className="mb-12 text-center">
             <Label>Résultats réels</Label>
             <SectionTitle center>Voici ce que ça donne.</SectionTitle>
             <p className="mt-4 text-slate-500">
               Des posts générés par Echo, publiés tels quels sur LinkedIn.
             </p>
-          </div>
+          </Reveal>
 
           <div className="flex snap-x gap-5 overflow-x-auto pb-3 lg:grid lg:grid-cols-3 lg:overflow-visible">
-            {POSTS.map((post) => (
-              <div key={post.name} className="min-w-[300px] snap-center">
+            {POSTS.map((post, index) => (
+              <Reveal
+                key={post.name}
+                delay={index * 120}
+                className="min-w-[300px] snap-center"
+              >
                 <LinkedInPostMockup {...post} />
-              </div>
+              </Reveal>
             ))}
           </div>
 
-          <div className="mt-8 text-center">
+          <Reveal className="mt-8 text-center" delay={220}>
             <Button asChild>
               <Link href="/sign-up">Je veux des posts comme ça →</Link>
             </Button>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Segments */}
       <section className="bg-white px-6 py-20">
         <div className="mx-auto max-w-5xl">
-          <div className="mb-12 text-center">
+          <Reveal className="mb-12 text-center">
             <Label>Pour qui</Label>
             <SectionTitle center>
               Fait pour toi, si tu construis quelque chose.
             </SectionTitle>
-          </div>
+          </Reveal>
 
           <div className="grid gap-4 md:grid-cols-3">
             {[
@@ -287,9 +319,10 @@ export default function Home() {
                 text: "Tu construis en public. La régularité compte. Mais trouver quoi dire chaque semaine, c'est le truc qui coince.",
                 cta: "Je teste pour mon projet →",
               },
-            ].map((segment) => (
-              <div
+            ].map((segment, index) => (
+              <Reveal
                 key={segment.title}
+                delay={index * 120}
                 className="flex h-full flex-col rounded-xl border border-[#e5e2ff] bg-[#f8f7ff] p-6 transition hover:-translate-y-1 hover:shadow-md"
               >
                 <h3 className="text-lg font-bold">{segment.title}</h3>
@@ -302,7 +335,7 @@ export default function Home() {
                 >
                   {segment.cta}
                 </Link>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -311,7 +344,7 @@ export default function Home() {
       {/* How it works */}
       <section className="bg-[#f8f7ff] px-6 py-20">
         <div className="mx-auto max-w-3xl">
-          <div className="mb-14 text-center">
+          <Reveal className="mb-14 text-center">
             <Label>Comment ça marche</Label>
             <SectionTitle center>
               De zéro idée à post publié.
@@ -322,7 +355,7 @@ export default function Home() {
               En moyenne, les utilisateurs récupèrent{" "}
               <strong>7h par mois</strong> en arrêtant de chercher seuls.
             </p>
-          </div>
+          </Reveal>
 
           {[
             {
@@ -341,23 +374,25 @@ export default function Home() {
               text: "Tu récupères un post structuré, fidèle à ton style, prêt à ajuster. Tu copies, tu publies quand tu veux.",
               cta: "Commencer en 2 minutes →",
             },
-          ].map((step) => (
-            <div key={step.number} className="mb-10 flex gap-7">
-              <div className="w-10 shrink-0 text-right text-3xl font-black leading-none text-[#6c63ff]/25">
-                {step.number}
+          ].map((step, index) => (
+            <Reveal key={step.number} delay={index * 130} className="mb-10">
+              <div className="flex gap-7">
+                <div className="w-10 shrink-0 text-right text-3xl font-black leading-none text-[#6c63ff]/25">
+                  {step.number}
+                </div>
+                <div className="flex-1 border-l-2 border-[#e5e2ff] pl-6">
+                  <h3 className="text-lg font-bold">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                    {step.text}
+                  </p>
+                  {step.cta && (
+                    <Button asChild className="mt-4">
+                      <Link href="/sign-up">{step.cta}</Link>
+                    </Button>
+                  )}
+                </div>
               </div>
-              <div className="flex-1 border-l-2 border-[#e5e2ff] pl-6">
-                <h3 className="text-lg font-bold">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                  {step.text}
-                </p>
-                {step.cta && (
-                  <Button asChild className="mt-4">
-                    <Link href="/sign-up">{step.cta}</Link>
-                  </Button>
-                )}
-              </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -365,12 +400,12 @@ export default function Home() {
       {/* Sans / Avec */}
       <section className="bg-white px-6 py-20">
         <div className="mx-auto max-w-5xl">
-          <div className="mb-12 text-center">
+          <Reveal className="mb-12 text-center">
             <Label>La différence en pratique</Label>
             <SectionTitle center>
               Ce qui change quand tu arrêtes de chercher seul.
             </SectionTitle>
-          </div>
+          </Reveal>
 
           <div className="grid gap-4 md:grid-cols-2">
             {[
@@ -396,9 +431,10 @@ export default function Home() {
                   "Tu gardes le dernier mot avec un texte prêt à ajuster.",
                 ],
               },
-            ].map((column) => (
-              <div
+            ].map((column, index) => (
+              <Reveal
                 key={column.label}
+                delay={index * 150}
                 className={`rounded-xl p-6 ${
                   column.highlighted
                     ? "border-2 border-[#6c63ff] bg-[#eee9ff]"
@@ -441,24 +477,24 @@ export default function Home() {
                     </span>
                   </div>
                 ))}
-              </div>
+              </Reveal>
             ))}
           </div>
 
-          <div className="mt-8 text-center">
+          <Reveal className="mt-8 text-center" delay={220}>
             <Button asChild>
               <Link href="/sign-up">Générer mes 4 premiers posts →</Link>
             </Button>
             <p className="mt-3 text-sm text-slate-500">
               Gratuit · Sans carte bancaire · 4 posts inclus
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Price anchor */}
       <section className="bg-[#f8f7ff] px-6 py-16">
-        <div className="mx-auto max-w-4xl text-center">
+        <Reveal className="mx-auto max-w-4xl text-center">
           <Label>Comparaison</Label>
           <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl">
             19€/mois. Soit moins qu&apos;une heure de ghostwriting.
@@ -519,20 +555,20 @@ export default function Home() {
           <Button asChild className="mt-8">
             <Link href="/sign-up">Essayer à 0€ →</Link>
           </Button>
-        </div>
+        </Reveal>
       </section>
 
       {/* Social proof */}
       <section className="bg-white px-6 py-20">
         <div className="mx-auto max-w-5xl">
-          <div className="mb-12 text-center">
+          <Reveal className="mb-12 text-center">
             <Label>Ils l&apos;utilisent déjà</Label>
             <SectionTitle center>Ce qu&apos;ils en disent.</SectionTitle>
             <p className="mt-4 text-sm text-slate-500">
               Retours de nos 10 premiers bêta-testeurs · Accès anticipé encore
               disponible
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid gap-4 md:grid-cols-3">
             {[
@@ -557,9 +593,10 @@ export default function Home() {
                 role: "Freelance marketing digital",
                 color: "bg-violet-600",
               },
-            ].map((testimonial) => (
-              <div
+            ].map((testimonial, index) => (
+              <Reveal
                 key={testimonial.name}
+                delay={index * 120}
                 className="rounded-xl border border-[#e5e2ff] bg-[#f8f7ff] p-6"
               >
                 <div className="mb-4 text-5xl font-black leading-none text-[#6c63ff]/20">
@@ -583,15 +620,15 @@ export default function Home() {
                     <div className="text-xs text-[#c4c0f0]">il y a 2 jours</div>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
 
-          <div className="mt-8 text-center">
+          <Reveal className="mt-8 text-center" delay={220}>
             <Button asChild variant="outline">
               <Link href="/sign-up">Rejoindre les premiers utilisateurs →</Link>
             </Button>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -601,10 +638,10 @@ export default function Home() {
       {/* FAQ */}
       <section className="bg-white px-6 py-20">
         <div className="mx-auto max-w-3xl">
-          <div className="mb-12 text-center">
+          <Reveal className="mb-12 text-center">
             <Label>FAQ</Label>
             <SectionTitle center>Les questions que tu te poses.</SectionTitle>
-          </div>
+          </Reveal>
 
           <div className="divide-y divide-[#e5e2ff]">
             {[
@@ -632,33 +669,37 @@ export default function Home() {
                 q: "Je peux annuler quand je veux ?",
                 a: "Oui, depuis le portail Stripe accessible dans l'application. Aucune démarche complexe.",
               },
-            ].map((faq) => (
-              <details key={faq.q} className="group py-4">
-                <summary className="flex cursor-pointer list-none items-center gap-4 text-left font-semibold [&::-webkit-details-marker]:hidden">
-                  <span className="flex-1">{faq.q}</span>
-                  <span className="text-2xl leading-none text-[#6c63ff] transition group-open:rotate-45">
-                    +
-                  </span>
-                </summary>
-                <p className="mt-3 text-sm leading-relaxed text-slate-500">{faq.a}</p>
-              </details>
+            ].map((faq, index) => (
+              <Reveal key={faq.q} delay={index * 60}>
+                <details className="group py-4">
+                  <summary className="flex cursor-pointer list-none items-center gap-4 text-left font-semibold [&::-webkit-details-marker]:hidden">
+                    <span className="flex-1">{faq.q}</span>
+                    <span className="text-2xl leading-none text-[#6c63ff] transition group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-500">
+                    {faq.a}
+                  </p>
+                </details>
+              </Reveal>
             ))}
           </div>
 
-          <div className="mt-10 rounded-xl border border-[#e5e2ff] bg-[#f8f7ff] p-7 text-center">
+          <Reveal className="mt-10 rounded-xl border border-[#e5e2ff] bg-[#f8f7ff] p-7 text-center">
             <p className="mb-4 text-slate-500">
               Encore un doute ? Le plus simple, c&apos;est d&apos;essayer.
             </p>
             <Button asChild>
               <Link href="/sign-up">Générer mes 4 posts gratuits →</Link>
             </Button>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Final CTA */}
       <section className="bg-[#6c63ff] px-6 py-20 text-center">
-        <div className="mx-auto max-w-2xl">
+        <Reveal className="mx-auto max-w-2xl">
           <h2 className="text-3xl font-black leading-tight tracking-tight text-white md:text-5xl">
             La page blanche du lundi,
             <br />
@@ -679,7 +720,7 @@ export default function Home() {
           <p className="mt-4 text-sm text-white/45">
             Garantie 30 jours · Annulation en 1 clic
           </p>
-        </div>
+        </Reveal>
       </section>
 
       <SiteFooter />
