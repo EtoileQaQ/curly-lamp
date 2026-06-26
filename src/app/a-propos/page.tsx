@@ -12,19 +12,16 @@ export const metadata: Metadata = {
 
 const VALUES = [
   {
-    icon: "🫵",
     title: "Ta voix d'abord",
-    desc: "Echo ne te transforme pas en clone lisse. Il amplifie ta façon de penser et d'écrire.",
+    desc: "Tu n'as pas besoin d'écrire comme tout le monde pour être visible. Echo t'aide à mettre en valeur ce qui te rend unique, au lieu de lisser ton style.",
   },
   {
-    icon: "⚡",
-    title: "Le temps est sacré",
-    desc: "Publier ne devrait pas voler tes soirées. On vise l'impact maximum en un minimum de temps.",
+    title: "Ton temps a de la valeur",
+    desc: "Ton expertise mérite d'être partagée, pas de te coûter toutes tes soirées. Echo réduit le temps passé à écrire pour que tu puisses te concentrer sur ton activité.",
   },
   {
-    icon: "🔍",
-    title: "Honnêteté radicale",
-    desc: "Pas de promesses magiques. Des outils concrets, des conseils mesurables, zéro bullshit.",
+    title: "Des promesses réalistes",
+    desc: "Pas de promesses magiques. L'objectif d'Echo est simple : t'aider à publier plus facilement, plus régulièrement et avec des contenus qui te ressemblent vraiment.",
   },
 ];
 
@@ -40,13 +37,15 @@ export default function AProposPage() {
             Notre mission
           </span>
           <h1 className="mx-auto mt-3 max-w-2xl text-4xl font-medium leading-tight md:text-5xl">
-            Aider chacun à exister sur LinkedIn{" "}
-            <span className="text-[#6c63ff]">avec sa vraie voix.</span>
+          Tu as des idées, des expériences et une expertise qui méritent d'être vues.
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-[#666]">
-            On est convaincus que tout le monde a quelque chose d&apos;utile à
-            dire. Ce qui manque, ce n&apos;est pas le talent — c&apos;est le temps,
-            la régularité et la confiance. Echo s&apos;occupe du reste.
+          Tu n'as pas besoin d'avoir une liste d'idées pour publier sur LinkedIn. 
+          Tu as déjà la matière. Echo t'aide à la retrouver, à l'organiser et à la transformer en publications qui te ressemblent.
+          </p>
+          <p className="mx-auto mt-6 max-w-xl text-[#666]">
+          Echo existe pour que tu puisses prendre la parole sur LinkedIn sans y consacrer tes soirées, 
+          sans devenir copywriter et sans avoir l'impression de publier des textes écrits par quelqu'un d'autre.
           </p>
         </div>
       </section>
@@ -56,25 +55,30 @@ export default function AProposPage() {
         <div className="mx-auto max-w-3xl">
           <Reveal>
             <h2 className="text-2xl font-medium md:text-3xl">
-              Pourquoi on a créé Echo
+              Pourquoi Echo existe
             </h2>
             <div className="mt-5 space-y-4 text-[#666]">
               <p>
-                LinkedIn est devenu l&apos;endroit où se jouent les
-                opportunités : clients, recrutements, partenariats. Mais
-                écrire régulièrement, bien, et sans y passer ses week-ends,
-                c&apos;est presque impossible seul.
+                Aujourd'hui, une grande partie des opportunités professionnelles naissent sur LinkedIn : 
+                nouveaux clients, recrutements, partenariats ou invitations.
               </p>
               <p>
-                Les outils d&apos;IA généralistes produisent des textes plats que
-                tout le monde reconnaît. Les ghostwriters humains, eux, coûtent
-                une fortune. Entre les deux, il n&apos;y avait rien.
+              Le problème, c'est que publier régulièrement demande du temps, 
+              de l'énergie et une discipline que peu de personnes peuvent maintenir sur la durée.
               </p>
               <p>
-                Alors on a construit Echo : une IA qui apprend{" "}
-                <strong className="text-[#111]">qui tu es</strong> — ton style,
-                tes convictions, tes anecdotes — pour écrire à ta place, sans
-                jamais trahir ta voix.
+              Tu peux utiliser une IA généraliste, mais elle repart de zéro à chaque conversation.
+              Tu peux faire appel à un ghostwriter, mais cela représente un budget important et demande malgré tout beaucoup d'échanges.
+              </p>
+              <p>
+              Echo a été conçu pour t'offrir une troisième voie.
+              </p>
+              <p>
+              Au lieu de générer un texte impersonnel, Echo apprend progressivement à te connaître : 
+              ta façon de t'exprimer, tes convictions, tes anecdotes et les sujets qui comptent pour toi.
+              </p>
+              <p>
+              Tu écris plus vite, tu restes fidèle à ta voix et tu peux publier avec régularité sans repartir de zéro à chaque fois.
               </p>
             </div>
           </Reveal>
@@ -86,7 +90,7 @@ export default function AProposPage() {
         <div className="mx-auto max-w-5xl">
           <div className="text-center">
             <span className="text-sm font-semibold uppercase tracking-wide text-[#6c63ff]">
-              Ce qui nous guide
+              Ce qui guide Echo
             </span>
             <h2 className="mt-3 text-3xl font-medium md:text-4xl">
               Nos convictions.
