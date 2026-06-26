@@ -6,7 +6,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Echo — Ton ghostwriter LinkedIn",
+  title: "Echo — La page blanche du lundi, c'est terminé.",
   description:
     "Echo - L'IA qui t'aide à ne plus chercher quoi publier sur LinkedIn.",
 };
