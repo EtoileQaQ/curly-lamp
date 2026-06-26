@@ -81,12 +81,16 @@ export function MemoryManager({ entries }: { entries: MemoryEntry[] }) {
       <AppHeader />
 
       <section className="mx-auto max-w-3xl px-6 py-12">
+        <div className="rounded-2xl border border-border bg-background p-5 shadow-sm">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent text-primary">
             <Brain className="h-6 w-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-medium tracking-tight">
+            <p className="text-xs font-extrabold uppercase tracking-[0.15em] text-primary">
+              Mémoire
+            </p>
+            <h1 className="mt-1 text-2xl font-black tracking-tight">
               Mon identité
             </h1>
             <p className="text-sm text-muted-foreground">
@@ -94,6 +98,7 @@ export function MemoryManager({ entries }: { entries: MemoryEntry[] }) {
               dans ta réalité.
             </p>
           </div>
+        </div>
         </div>
 
         {/* Compteur */}
@@ -167,7 +172,7 @@ export function MemoryManager({ entries }: { entries: MemoryEntry[] }) {
 
         {/* Liste ou état vide */}
         {entries.length === 0 ? (
-          <div className="mt-8 rounded-2xl border border-dashed border-border bg-background p-8 text-center">
+          <div className="mt-8 rounded-2xl border border-dashed border-border bg-background p-8 text-center shadow-sm">
             <Lightbulb className="mx-auto h-8 w-8 text-primary" />
             <p className="mt-3 font-medium text-foreground">
               Ta mémoire est vide — donne vie à ton Echo !

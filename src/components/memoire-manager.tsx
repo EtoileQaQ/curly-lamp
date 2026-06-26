@@ -143,7 +143,10 @@ export function MemoireManager({ entries }: { entries: StoredMemoryEntry[] }) {
               <Brain className="h-6 w-6" />
             </div>
             <div>
-              <h1 className="text-2xl font-medium tracking-tight md:text-3xl lg:text-4xl">
+              <p className="text-xs font-extrabold uppercase tracking-[0.15em] text-primary">
+                Mémoire
+              </p>
+              <h1 className="mt-1 text-2xl font-black tracking-tight md:text-3xl lg:text-4xl">
                 La mémoire d&apos;Echo
               </h1>
               <p className="text-sm text-muted-foreground">
@@ -169,7 +172,7 @@ export function MemoireManager({ entries }: { entries: StoredMemoryEntry[] }) {
                 key={key}
                 className="rounded-2xl border border-border bg-background p-4 shadow-sm md:p-5"
               >
-                <h2 className="text-xl font-semibold text-foreground md:text-2xl">
+                <h2 className="text-xl font-bold text-foreground md:text-2xl">
                   {meta.label}
                 </h2>
                 {items.length === 0 ? (
@@ -255,7 +258,10 @@ export function MemoireManager({ entries }: { entries: StoredMemoryEntry[] }) {
       </div>
 
       <aside className="h-fit rounded-2xl border border-border bg-background p-4 shadow-sm md:p-6">
-        <h2 className="text-xl font-semibold md:text-2xl">Ajouter une entrée</h2>
+        <p className="text-xs font-extrabold uppercase tracking-[0.15em] text-primary">
+          Ajout manuel
+        </p>
+        <h2 className="mt-2 text-xl font-bold md:text-2xl">Ajouter une entrée</h2>
         <p className="mt-1 text-sm text-muted-foreground md:text-base">
           Plus ta mémoire est précise, moins Echo sonne générique.
         </p>

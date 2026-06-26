@@ -96,17 +96,22 @@ export function VisualStudio({
       <AppHeader />
 
       <section className="mx-auto w-full max-w-5xl overflow-x-hidden p-4 md:px-6 md:py-10 lg:px-8">
-        <h1 className="text-2xl font-medium tracking-tight md:text-3xl lg:text-4xl">
-          Crée le visuel de ton post
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground md:text-base">
-          Choisis un format, ajuste le texte, puis télécharge ton image (carré
-          1080×1080, prêt pour LinkedIn).
-        </p>
+        <div className="rounded-2xl border border-border bg-background p-5 shadow-sm md:p-6">
+          <p className="text-xs font-extrabold uppercase tracking-[0.15em] text-primary">
+            Studio visuel
+          </p>
+          <h1 className="mt-2 text-2xl font-black tracking-tight md:text-3xl lg:text-4xl">
+            Crée le visuel de ton post
+          </h1>
+          <p className="mt-2 text-sm text-muted-foreground md:text-base">
+            Choisis un format, ajuste le texte, puis télécharge ton image (carré
+            1080×1080, prêt pour LinkedIn).
+          </p>
+        </div>
 
         <div className="mt-6 grid gap-6 lg:mt-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-8">
           {/* Colonne de gauche : contrôles */}
-          <div className="min-w-0 space-y-5 md:space-y-6">
+          <div className="min-w-0 space-y-5 rounded-2xl border border-border bg-background p-5 shadow-sm md:space-y-6 md:p-6">
             <div>
               <Label className="mb-2 block">Format du visuel</Label>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">

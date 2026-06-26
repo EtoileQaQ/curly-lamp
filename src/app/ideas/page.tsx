@@ -52,7 +52,7 @@ export default function IdeasPage() {
         <main className="min-h-screen overflow-x-hidden bg-card pb-28 text-foreground md:pb-0">
           <AppHeader />
           <section className="mx-auto w-full max-w-5xl p-4 md:px-6 md:py-10 lg:px-8">
-            <div className="rounded-2xl border border-border bg-background p-6 text-center text-sm text-muted-foreground">
+            <div className="rounded-2xl border border-border bg-background p-6 text-center text-sm text-muted-foreground shadow-sm">
               Chargement des idées…
             </div>
           </section>
@@ -164,8 +164,11 @@ function IdeasPageContent() {
       <AppHeader />
 
       <section className="mx-auto w-full max-w-5xl overflow-x-hidden p-4 md:px-6 md:py-10 lg:px-8">
-        <div className="text-center">
-          <h1 className="text-2xl font-medium tracking-tight md:text-3xl lg:text-4xl">
+        <div className="rounded-2xl border border-border bg-background p-5 text-center shadow-sm md:p-6">
+          <p className="text-xs font-extrabold uppercase tracking-[0.15em] text-primary">
+            Génération
+          </p>
+          <h1 className="mt-2 text-2xl font-black tracking-tight md:text-3xl lg:text-4xl">
             Tes idées de posts
           </h1>
           <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground md:text-base">
@@ -248,7 +251,7 @@ function IdeasPageContent() {
                     isSelected
                       ? "border-primary bg-primary/5 ring-2 ring-primary"
                       : "border-border bg-background hover:border-primary/40 hover:shadow-md"
-                  }`}
+                  } shadow-sm`}
                 >
                   <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-xs font-bold text-primary">
                     {index + 1}

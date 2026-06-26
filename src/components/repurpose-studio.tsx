@@ -245,13 +245,18 @@ export function RepurposeStudio() {
       />
 
       <section className="mx-auto w-full max-w-3xl overflow-x-hidden p-4 md:px-6 md:py-12 lg:px-8">
-        <h1 className="text-2xl font-medium tracking-tight md:text-3xl lg:text-4xl">
-          Repurposing
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground md:text-base">
-          Colle n&apos;importe quoi : un lien, un article, des notes, un
-          transcript… Echo en fait un post LinkedIn dans ton style.
-        </p>
+        <div className="rounded-2xl border border-border bg-background p-5 shadow-sm md:p-6">
+          <p className="text-xs font-extrabold uppercase tracking-[0.15em] text-primary">
+            Repurposing
+          </p>
+          <h1 className="mt-2 text-2xl font-black tracking-tight md:text-3xl lg:text-4xl">
+            Transforme ta matière en post LinkedIn
+          </h1>
+          <p className="mt-2 text-sm text-muted-foreground md:text-base">
+            Colle n&apos;importe quoi : un lien, un article, des notes, un
+            transcript… Echo en fait un post LinkedIn dans ton style.
+          </p>
+        </div>
 
         {error && (
           <p className="mt-6 rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">
@@ -261,7 +266,7 @@ export function RepurposeStudio() {
 
         {/* ÉTAPE 1 — Saisie */}
         {step === "input" && (
-          <div className="mt-6 space-y-4 md:mt-8 md:space-y-5">
+          <div className="mt-6 space-y-4 rounded-2xl border border-border bg-background p-5 shadow-sm md:mt-8 md:space-y-5 md:p-6">
             <div className="space-y-2">
               <Label htmlFor="source">Ton contenu source</Label>
               <Textarea
@@ -305,7 +310,7 @@ export function RepurposeStudio() {
 
         {/* ÉTAPE 2 — Idées extraites */}
         {step === "analyzed" && analysis && (
-          <div className="mt-6 space-y-4 md:mt-8 md:space-y-5">
+          <div className="mt-6 space-y-4 rounded-2xl border border-border bg-background p-5 shadow-sm md:mt-8 md:space-y-5 md:p-6">
             <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
               Type détecté : {TYPE_LABELS[analysis.type] ?? analysis.type}
             </div>
@@ -365,7 +370,7 @@ export function RepurposeStudio() {
 
         {/* ÉTAPE 3 — Éditeur */}
         {step === "editing" && (
-          <div className="mt-6 space-y-5 md:mt-8 md:space-y-6">
+          <div className="mt-6 space-y-5 rounded-2xl border border-border bg-background p-5 shadow-sm md:mt-8 md:space-y-6 md:p-6">
             <form action={savePost} className="space-y-4">
               <input type="hidden" name="title" value={angle || "Repurposing"} />
               <input type="hidden" name="content" value={content} />

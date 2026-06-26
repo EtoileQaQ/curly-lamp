@@ -215,12 +215,14 @@ export function PostEditor({
       />
 
       <section className="mx-auto w-full max-w-3xl overflow-x-hidden p-4 md:px-6 md:py-10 lg:px-8">
-        <p className="text-xs font-medium text-muted-foreground md:text-sm">
-          Sujet du post
-        </p>
-        <h1 className="mt-1 break-words text-2xl font-medium tracking-tight md:text-3xl lg:text-4xl">
-          {idea}
-        </h1>
+        <div className="rounded-2xl border border-border bg-background p-5 shadow-sm md:p-6">
+          <p className="text-xs font-extrabold uppercase tracking-[0.15em] text-primary">
+            Sujet du post
+          </p>
+          <h1 className="mt-2 break-words text-2xl font-black tracking-tight md:text-3xl lg:text-4xl">
+            {idea}
+          </h1>
+        </div>
 
         {error && (
           <p className="mt-6 rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">
@@ -229,7 +231,7 @@ export function PostEditor({
         )}
 
         {loading ? (
-          <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-background px-4 py-16 text-center text-muted-foreground md:mt-8 md:py-20">
+          <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-background px-4 py-16 text-center text-muted-foreground shadow-sm md:mt-8 md:py-20">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
             <p className="mt-4 flex items-center gap-2 text-sm font-medium">
               <Sparkles className="h-4 w-4" />

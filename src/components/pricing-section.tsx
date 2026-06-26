@@ -39,28 +39,28 @@ export function PricingSection() {
   }
 
   return (
-    <section id="tarifs" className="bg-white px-6 py-20">
+    <section id="tarifs" className="bg-[#12101f] px-6 py-20 text-white">
       <div className="mx-auto max-w-5xl">
         <div className="text-center">
-          <span className="text-sm font-semibold uppercase tracking-wide text-[#6c63ff]">
+          <span className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[#b8b4ff]">
             Tarifs
           </span>
-          <h2 className="mt-3 text-3xl font-medium md:text-4xl">
+          <h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">
             Teste Echo gratuitement. Passe Pro quand tu veux publier pour de vrai.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-[#666]">
+          <p className="mx-auto mt-4 max-w-xl text-slate-500">
             Commence sans carte bancaire, vérifie si le rendu te ressemble,
             puis débloque la génération illimitée quand Echo devient ton
             système de contenu LinkedIn.
           </p>
 
           {/* Toggle mensuel / annuel (fonctionnel) */}
-          <div className="mt-6 inline-flex items-center gap-1 rounded-lg border border-[#e5e5e5] bg-white p-1">
+          <div className="mt-6 inline-flex items-center gap-1 rounded-lg border border-[#2a2450] bg-[#1c1930] p-1">
             <button
               type="button"
               onClick={() => setAnnual(false)}
               className={`rounded-md px-4 py-1.5 text-sm font-medium transition ${
-                !annual ? "bg-[#6c63ff] text-white" : "text-[#666]"
+                !annual ? "bg-[#6c63ff] text-white" : "text-slate-500"
               }`}
             >
               Mensuel
@@ -69,7 +69,7 @@ export function PricingSection() {
               type="button"
               onClick={() => setAnnual(true)}
               className={`flex items-center gap-2 rounded-md px-4 py-1.5 text-sm font-medium transition ${
-                annual ? "bg-[#6c63ff] text-white" : "text-[#666]"
+                annual ? "bg-[#6c63ff] text-white" : "text-slate-500"
               }`}
             >
               Annuel
@@ -89,10 +89,10 @@ export function PricingSection() {
         <div className="mx-auto mt-12 grid max-w-3xl items-start gap-6 md:grid-cols-2">
           {/* Carte Gratuit */}
           <Reveal>
-            <div className="h-full rounded-2xl border-[0.5px] border-[#e5e5e5] bg-white p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+            <div className="h-full rounded-2xl border border-[#2a2450] bg-[#1c1930] p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
               <h3 className="text-lg font-semibold">Gratuit</h3>
               <div className="mt-2 text-3xl font-medium">0€/mois</div>
-              <p className="mt-2 text-sm text-[#666]">
+              <p className="mt-2 text-sm text-slate-500">
                 Pour tester la qualité d&apos;Echo avec tes propres idées.
               </p>
               <ul className="mt-6 space-y-2.5 text-sm">
@@ -111,7 +111,7 @@ export function PricingSection() {
               </ul>
               <Link
                 href="/sign-up"
-                className="mt-6 block rounded-lg border border-[#e5e5e5] px-4 py-2.5 text-center text-sm font-semibold text-[#111] transition hover:bg-[#f8f8f8]"
+                className="mt-6 block rounded-lg border border-[#2a2450] px-4 py-2.5 text-center text-sm font-bold text-slate-300 transition hover:bg-white/5 hover:text-white"
               >
                 Commencer gratuitement
               </Link>
@@ -120,7 +120,7 @@ export function PricingSection() {
 
           {/* Carte Pro (featured) */}
           <Reveal delay={120}>
-            <div className="relative h-full rounded-2xl border-2 border-[#6c63ff] bg-white p-6 shadow-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
+            <div className="relative h-full rounded-2xl border-2 border-[#6c63ff] bg-[#1c1930] p-6 shadow-lg shadow-[#6c63ff]/10 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
               <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#eeecff] px-3 py-1 text-xs font-bold text-[#6c63ff]">
                 Le plus populaire
               </span>
@@ -132,7 +132,7 @@ export function PricingSection() {
                 </span>
               </div>
               <p className="mt-1 h-4 text-xs text-[#6c63ff]">{pro.note}</p>
-              <p className="mt-2 text-sm text-[#666]">
+              <p className="mt-2 text-sm text-slate-500">
                 Pour transformer Echo en routine de publication LinkedIn.
               </p>
               <ul className="mt-6 space-y-2.5 text-sm">
@@ -162,7 +162,7 @@ export function PricingSection() {
           </Reveal>
         </div>
 
-        <p className="mt-8 text-center text-sm text-[#666]">
+        <p className="mt-8 text-center text-sm text-slate-600">
           Sans engagement long terme · Annulation à tout moment depuis ton compte
         </p>
       </div>

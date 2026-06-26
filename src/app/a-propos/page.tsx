@@ -30,23 +30,23 @@ const VALUES = [
 
 export default function AProposPage() {
   return (
-    <div className="min-h-screen bg-white text-[#111]">
+    <div className="min-h-screen bg-white text-[#12101f]">
       <SiteHeader />
 
       {/* Hero / mission */}
-      <section className="bg-white px-6 py-20 text-center">
+      <section className="bg-[#12101f] px-6 py-20 text-center text-white md:py-24">
         <div className="mx-auto max-w-3xl">
-          <span className="text-sm font-semibold uppercase tracking-wide text-[#6c63ff]">
+          <span className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[#b8b4ff]">
             Notre mission
           </span>
-          <h1 className="mx-auto mt-3 max-w-2xl text-4xl font-medium leading-tight md:text-5xl">
+          <h1 className="mx-auto mt-4 max-w-2xl text-4xl font-black leading-tight tracking-tight md:text-6xl">
           Tu as des idées, des expériences et une expertise qui méritent d&apos;être vues.
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-[#666]">
+          <p className="mx-auto mt-6 max-w-xl text-slate-400">
           Tu n&apos;as pas besoin d&apos;avoir une liste d&apos;idées pour publier sur LinkedIn. 
           Tu as déjà la matière. Echo t&apos;aide à la retrouver, à l&apos;organiser et à la transformer en publications qui te ressemblent.
           </p>
-          <p className="mx-auto mt-6 max-w-xl text-[#666]">
+          <p className="mx-auto mt-6 max-w-xl text-slate-400">
           Echo existe pour que tu puisses prendre la parole sur LinkedIn sans y consacrer tes soirées, 
           sans devenir copywriter et sans avoir l&apos;impression de publier des textes écrits par quelqu&apos;un d&apos;autre.
           </p>
@@ -54,13 +54,13 @@ export default function AProposPage() {
       </section>
 
       {/* Le problème */}
-      <section className="bg-[#f8f8f8] px-6 py-20">
+      <section className="bg-[#f8f7ff] px-6 py-20">
         <div className="mx-auto max-w-3xl">
           <Reveal>
-            <h2 className="text-2xl font-medium md:text-3xl">
+            <h2 className="text-2xl font-black tracking-tight md:text-4xl">
               Pourquoi Echo existe
             </h2>
-            <div className="mt-5 space-y-4 text-[#666]">
+            <div className="mt-5 space-y-4 text-slate-600">
               <p>
                 Aujourd&apos;hui, une grande partie des opportunités professionnelles naissent sur LinkedIn : 
                 nouveaux clients, recrutements, partenariats ou invitations.
@@ -92,10 +92,10 @@ export default function AProposPage() {
       <section className="bg-white px-6 py-20">
         <div className="mx-auto max-w-5xl">
           <div className="text-center">
-            <span className="text-sm font-semibold uppercase tracking-wide text-[#6c63ff]">
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[#6c63ff]">
               Ce qui guide Echo
             </span>
-            <h2 className="mt-3 text-3xl font-medium md:text-4xl">
+            <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
               Nos convictions.
             </h2>
           </div>
@@ -103,12 +103,12 @@ export default function AProposPage() {
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {VALUES.map((v, i) => (
               <Reveal key={v.title} delay={i * 120}>
-                <div className="h-full rounded-2xl border-[0.5px] border-[#e5e5e5] bg-white p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#eeecff] text-xl">
+                <div className="h-full rounded-2xl border border-[#e5e2ff] bg-[#f8f7ff] p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#eee9ff] text-sm font-black text-[#6c63ff]">
                     {v.icon}
                   </div>
                   <h3 className="mt-4 text-lg font-semibold">{v.title}</h3>
-                  <p className="mt-2 text-sm text-[#666]">{v.desc}</p>
+                  <p className="mt-2 text-sm text-slate-600">{v.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -117,18 +117,18 @@ export default function AProposPage() {
       </section>
 
       {/* CTA final */}
-      <section className="bg-[#1a1a2e] px-6 py-20 text-center text-white">
+      <section className="bg-[#6c63ff] px-6 py-20 text-center text-white">
         <div className="mx-auto max-w-2xl">
-          <h2 className="text-3xl font-medium md:text-4xl">
+          <h2 className="text-3xl font-black tracking-tight md:text-5xl">
             Rejoins les premiers créateurs Echo.
           </h2>
-          <p className="mx-auto mt-4 max-w-md text-[#a9a9c0]">
+          <p className="mx-auto mt-4 max-w-md text-white/70">
             Sans carte bancaire. Sans engagement. Juste des posts qui te
             ressemblent.
           </p>
           <Link
             href="/sign-up"
-            className="mt-8 inline-block rounded-lg bg-white px-7 py-3.5 font-semibold text-[#1a1a2e] transition hover:opacity-90"
+            className="mt-8 inline-block rounded-lg bg-white px-7 py-3.5 font-bold text-[#6c63ff] transition hover:opacity-90"
           >
             Générer mes 4 premiers posts →
           </Link>

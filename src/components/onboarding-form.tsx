@@ -143,10 +143,13 @@ export function OnboardingForm({
     <main className="min-h-screen overflow-x-hidden bg-card px-4 pb-28 pt-6 text-foreground md:px-6 md:py-12">
       <div className="mx-auto w-full max-w-3xl overflow-x-hidden">
         <div className="mb-6 text-center md:mb-8">
-          <div className="text-2xl font-bold tracking-tight">
+          <div className="text-2xl font-black tracking-tight">
             <span className="text-primary">Echo</span>
           </div>
-          <h1 className="mt-4 text-2xl font-medium tracking-tight md:text-3xl lg:text-4xl">
+          <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.15em] text-primary">
+            Onboarding
+          </p>
+          <h1 className="mt-2 text-2xl font-black tracking-tight md:text-3xl lg:text-4xl">
             Construis la mémoire d&apos;Echo
           </h1>
           <p className="mt-2 text-sm text-muted-foreground md:text-base">
@@ -155,7 +158,7 @@ export function OnboardingForm({
           </p>
         </div>
 
-        <div className="mb-6 rounded-2xl border border-border bg-background p-4 md:mb-8">
+        <div className="mb-6 rounded-2xl border border-border bg-background p-4 shadow-sm md:mb-8">
           <div className="flex items-center justify-between gap-2">
             {STEPS.map((label, index) => {
               const stepNumber = index + 1;

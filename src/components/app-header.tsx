@@ -64,11 +64,11 @@ export function AppHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 hidden border-b border-border bg-background md:block">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+      <header className="sticky top-0 z-40 hidden border-b border-border bg-background/90 backdrop-blur md:block">
+        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
           {/* Zone gauche : logo */}
           <div className="flex-1">
-            <Link href="/dashboard" className="text-xl font-bold tracking-tight">
+            <Link href="/dashboard" className="text-xl font-black tracking-tight">
               <span className="text-primary">Echo</span>
             </Link>
           </div>
@@ -103,7 +103,7 @@ export function AppHeader() {
         <div className="flex h-14 items-center justify-between gap-6 px-4">
           <Link
             href="/dashboard"
-            className="flex-1 text-lg font-bold tracking-tight"
+            className="flex-1 text-lg font-black tracking-tight"
           >
             <span className="text-primary">Echo</span>
           </Link>
@@ -120,7 +120,7 @@ export function AppHeader() {
         </div>
       </header>
 
-      <nav className="fixed bottom-3 left-3 right-3 z-50 flex h-[64px] items-center justify-around rounded-2xl border border-border bg-card/95 shadow-xl backdrop-blur md:hidden">
+      <nav className="fixed bottom-3 left-3 right-3 z-50 flex h-[64px] items-center justify-around rounded-2xl border border-border bg-background/95 shadow-2xl shadow-primary/10 backdrop-blur md:hidden">
         {MOBILE_NAV.map((item) => {
           const Icon = item.icon;
           const active = isActive(item.href);

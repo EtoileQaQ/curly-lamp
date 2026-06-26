@@ -35,22 +35,27 @@ export default async function MesThemesPage() {
       <AppHeader />
 
       <section className="mx-auto w-full max-w-3xl overflow-x-hidden p-4 md:px-6 md:py-12 lg:px-8">
-        <div className="flex items-center gap-3">
+        <div className="rounded-2xl border border-border bg-background p-5 shadow-sm md:p-6">
+          <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent text-primary">
             <Hash className="h-6 w-6" />
           </div>
           <div className="min-w-0">
-            <h1 className="text-2xl font-medium tracking-tight md:text-3xl lg:text-4xl">
+            <p className="text-xs font-extrabold uppercase tracking-[0.15em] text-primary">
+              Analyse
+            </p>
+            <h1 className="mt-1 text-2xl font-black tracking-tight md:text-3xl lg:text-4xl">
               Mes thèmes
             </h1>
             <p className="text-sm text-muted-foreground md:text-base">
               Répartition de tes sujets sur tes {total} derniers posts.
             </p>
           </div>
+          </div>
         </div>
 
         {total === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-border bg-background p-6 text-center md:mt-8 md:p-12">
+          <div className="mt-6 rounded-2xl border border-dashed border-border bg-background p-6 text-center shadow-sm md:mt-8 md:p-12">
             <p className="text-sm text-muted-foreground md:text-base">
               Aucun post pour l&apos;instant. Crée tes premiers posts pour voir
               tes thèmes apparaître.

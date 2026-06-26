@@ -30,15 +30,15 @@ export function SiteFooter() {
   ];
 
   return (
-    <footer className="bg-[#1a1a2e] px-6 py-14 text-white">
+    <footer className="border-t border-[#2a2450] bg-[#12101f] px-6 py-14 text-white">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           {/* Marque */}
           <div>
-            <div className="text-xl font-bold tracking-tight">
+            <div className="text-xl font-black tracking-tight">
               <span className="text-[#6c63ff]">Echo</span>
             </div>
-            <p className="mt-3 max-w-xs text-sm text-[#a9a9c0]">
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-slate-500">
             L&apos;IA qui t&apos;aide à ne plus chercher quoi publier sur LinkedIn.
             </p>
           </div>
@@ -46,13 +46,13 @@ export function SiteFooter() {
           {/* Colonnes de liens */}
           {columns.map((col) => (
             <div key={col.title}>
-              <h3 className="text-sm font-semibold text-white">{col.title}</h3>
+              <h3 className="text-xs font-extrabold uppercase tracking-[0.13em] text-slate-600">{col.title}</h3>
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-[#a9a9c0] transition hover:text-white"
+                      className="text-sm text-slate-500 transition hover:text-white"
                     >
                       {link.label}
                     </Link>
@@ -63,7 +63,7 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm text-[#6b6b85] sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[#2a2450] pt-6 text-sm text-slate-600 sm:flex-row">
           <p>© {new Date().getFullYear()} Echo. Tous droits réservés.</p>
           <p>
             Powered by{" "}

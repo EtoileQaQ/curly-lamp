@@ -62,9 +62,12 @@ export default async function DashboardPage({
       <AppHeader />
 
       <section className="mx-auto w-full max-w-5xl overflow-x-hidden p-4 md:px-6 md:py-12 lg:px-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div className="rounded-2xl border border-border bg-background p-5 shadow-sm md:flex md:items-end md:justify-between md:p-6">
           <div>
-            <h1 className="text-2xl font-medium tracking-tight md:text-3xl lg:text-4xl">
+            <p className="text-xs font-extrabold uppercase tracking-[0.15em] text-primary">
+              Dashboard
+            </p>
+            <h1 className="mt-2 text-2xl font-black tracking-tight md:text-3xl lg:text-4xl">
               Mes posts
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">

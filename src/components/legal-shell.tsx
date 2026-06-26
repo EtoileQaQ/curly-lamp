@@ -13,17 +13,20 @@ export function LegalShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-white text-[#111]">
+    <div className="min-h-screen bg-white text-[#12101f]">
       <SiteHeader />
 
-      <section className="px-6 py-16">
+      <section className="bg-[#f8f7ff] px-6 py-16 md:py-20">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-3xl font-medium md:text-4xl">{title}</h1>
-          <p className="mt-2 text-sm text-[#999]">
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[#6c63ff]">
+            Légal
+          </p>
+          <h1 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{title}</h1>
+          <p className="mt-3 text-sm text-slate-500">
             Dernière mise à jour : {updated}
           </p>
 
-          <div className="mt-10 space-y-5 leading-relaxed text-[#666] [&_a]:text-[#6c63ff] [&_a]:underline [&_h2]:mt-10 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-[#111] [&_h3]:mt-6 [&_h3]:font-semibold [&_h3]:text-[#111] [&_li]:mt-1 [&_strong]:text-[#111] [&_ul]:list-disc [&_ul]:pl-6">
+          <div className="mt-10 rounded-2xl border border-[#e5e2ff] bg-white p-6 leading-relaxed text-slate-600 shadow-sm md:p-8 [&_a]:text-[#6c63ff] [&_a]:underline [&_h2]:mt-10 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#12101f] [&_h3]:mt-6 [&_h3]:font-bold [&_h3]:text-[#12101f] [&_li]:mt-1 [&_strong]:text-[#12101f] [&_ul]:list-disc [&_ul]:pl-6">
             {children}
           </div>
         </div>
