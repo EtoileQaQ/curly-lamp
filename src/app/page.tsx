@@ -62,7 +62,7 @@ export default function Home() {
         <div className="mx-auto max-w-3xl">
           <h1 className="mx-auto mt-8 max-w-2xl text-[32px] font-medium leading-tight md:text-[48px]">
           La page blanche du lundi,{" "}
-            <span className="text-[#6c63ff]"> c'est terminé.</span>
+            <span className="text-[#6c63ff]"> c&apos;est terminé.</span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-[480px] text-[#666]">
@@ -116,7 +116,7 @@ export default function Home() {
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-[#666]">
             Ce n&apos;est pas un manque de volonté. 
-            C&apos;est que passer de "je devrais publier" à un vrai post demande beaucoup plus d&apos;énergie que ça n&apos;en a l&apos;air.
+            C&apos;est que passer de &ldquo;je devrais publier&rdquo; à un vrai post demande beaucoup plus d&apos;énergie que ça n&apos;en a l&apos;air.
             </p>
           </div>
 
@@ -125,7 +125,7 @@ export default function Home() {
               "Je devrais publier quelque chose cette semaine.",
               "Mais sur quoi ? Je ne vois pas d'angle",
               "Bon, je verrai ça demain.",
-              "Je n'ai rien publié. Encore."",
+              "Je n'ai rien publié. Encore.",
             ].map((pain, i) => (
               <Reveal key={pain} delay={i * 100}>
                 <div className="flex h-full items-start gap-3 rounded-xl border-[0.5px] border-[#e5e5e5] bg-[#f8f8f8] p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
@@ -134,17 +134,17 @@ export default function Home() {
                   </span>
                   <p className="text-sm text-[#444]">{pain}</p>
                 </div>
-            
-            <div className="text-center">
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
             <p className="mx-auto mt-4 max-w-xl text-[#666]">
-            Ce n&apos;est pas que tu n&apos;as rien à dire. C&apos;est qu'il n&apos;y a personne pour te poser la bonne question au bon moment.
+            Ce n&apos;est pas que tu n&apos;as rien à dire. C&apos;est qu&apos;il n&apos;y a personne pour te poser la bonne question au bon moment.
             </p>
             <span className="text-sm font-semibold uppercase tracking-wide text-[#6c63ff]">
             Echo fait exactement ça.
             </span>
-          </div>
-              </Reveal>
-            ))}
           </div>
 
           {/* Comment ça marche — 3 étapes concrètes */}
@@ -203,7 +203,7 @@ export default function Home() {
                   "Tu bloques devant la page blanche. Tu fermes l'onglet.",
                   "Tu publies deux fois par mois, dans le meilleur des cas.",
                   "Tes posts IA sonnent propres, mais interchangeables.",
-                  "Tu hésites avant de publier parce que "ça ne te ressemble pas vraiment"",
+                  "Tu hésites avant de publier parce que ça ne te ressemble pas vraiment.",
                 ].map((t) => (
                   <li key={t} className="flex items-start gap-3 text-sm text-[#666]">
                     <span className="mt-0.5 text-[#ef4444]">–</span>
