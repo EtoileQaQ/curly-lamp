@@ -39,8 +39,7 @@ export function SiteFooter() {
               <span className="text-[#6c63ff]">Echo</span>
             </div>
             <p className="mt-3 max-w-xs text-sm text-[#a9a9c0]">
-              L&apos;IA qui écrit tes posts LinkedIn avec ta voix, tes
-              convictions et tes anecdotes.
+              Libère toi du temps pour faire ce qui compte vraiment pour toi.
             </p>
           </div>
 
