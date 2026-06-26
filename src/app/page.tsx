@@ -387,11 +387,11 @@ export default function Home() {
       <section className="bg-[#1a1a2e] px-6 py-20 text-center text-white">
         <div className="mx-auto max-w-2xl">
           <h2 className="text-3xl font-medium md:text-4xl">
-            Ton prochain post peut partir de ta vraie matière.
+            Ton prochain post peut devenir le début d'une vraie présence sur LinkedIn.
           </h2>
           <p className="mx-auto mt-4 max-w-md text-[#a9a9c0]">
-            Sans carte bancaire pour tester. Une mémoire éditoriale claire.
-            Des posts moins génériques.
+            Sans carte bancaire pour tester. Des posts moins génériques.
+            Une expertise qui devient visible.
           </p>
 
           <div className="mx-auto mt-8 flex max-w-md flex-col items-center justify-center gap-3 sm:flex-row">
