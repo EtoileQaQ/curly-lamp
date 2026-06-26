@@ -251,9 +251,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. Section Tarifs */}
-      <PricingSection />
-
       {/* 7bis. Section FAQ (traitement des objections — après les tarifs) */}
       <section className="bg-white px-6 py-20">
         <div className="mx-auto max-w-3xl">
@@ -312,6 +309,9 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+
+          {/* 7. Section Tarifs */}
+          <PricingSection />
 
           {/* CTA de section */}
           <div className="mt-10 rounded-2xl bg-[#f8f8f8] p-8 text-center">
