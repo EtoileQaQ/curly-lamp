@@ -39,7 +39,7 @@ export function SiteFooter() {
               <span className="text-[#6c63ff]">Echo</span>
             </div>
             <p className="mt-3 max-w-xs text-sm text-[#a9a9c0]">
-              Libère toi du temps pour faire ce qui compte vraiment pour toi.
+            L&apos;IA qui t&apos;aide à ne plus chercher quoi publier sur LinkedIn.
             </p>
           </div>
 
