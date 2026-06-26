@@ -66,7 +66,17 @@ export function SiteFooter() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm text-[#6b6b85] sm:flex-row">
           <p>© {new Date().getFullYear()} Echo. Tous droits réservés.</p>
-          <p>Fait avec ✦ pour les créateurs LinkedIn.</p>
+          <p>
+            Powered by{" "}
+            <Link
+              href="https://delphes-int.fr/"
+              className="transition hover:text-white"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Delphes Int
+            </Link>
+          </p>
         </div>
       </div>
     </footer>
