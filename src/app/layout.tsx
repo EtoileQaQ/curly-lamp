@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Echo — Ton ghostwriter LinkedIn",
   description:
-    "Echo génère des posts LinkedIn dans ton style d'écriture, avec leurs visuels, en moins de 10 minutes.",
+    "Echo - L'IA qui t'aide à ne plus chercher quoi publier sur LinkedIn.",
 };
 
 export default function RootLayout({
