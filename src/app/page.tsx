@@ -166,7 +166,7 @@ export default function Home() {
             {[
               {
                 step: "1",
-                title: "Tu poses le point de départ",
+                title: "Tu laisses Echo trouver le point de départ",
                 desc: "Pas besoin d'arriver avec un sujet. Pas besoin de passer deux heures à reformuler ce qu'une IA générique t'a rendu.",
               },
               {
@@ -394,7 +394,7 @@ export default function Home() {
       <section className="bg-[#1a1a2e] px-6 py-20 text-center text-white">
         <div className="mx-auto max-w-2xl">
           <h2 className="text-3xl font-medium md:text-4xl">
-            Ton prochain post peut devenir le début d&apos;une vraie présence sur LinkedIn.
+          La page blanche du lundi, c&apos;est pour les autres maintenant
           </h2>
           <p className="mx-auto mt-4 max-w-md text-[#a9a9c0]">
             Sans carte bancaire pour tester. Des posts moins génériques.
