@@ -16,9 +16,8 @@ export default function CguPage() {
       <h2>1. Objet</h2>
       <p>
         Les présentes conditions générales régissent l&apos;utilisation du
-        service <strong>Echo</strong> (le « Service »), édité par [À COMPLÉTER —
-        nom de la société]. En créant un compte, tu acceptes ces conditions sans
-        réserve.
+        service <strong>Echo</strong> (le « Service »), édité par Delphes Int.
+        En créant un compte, tu acceptes ces conditions sans réserve.
       </p>
 
       <h2>2. Description du service</h2>
@@ -101,7 +100,7 @@ export default function CguPage() {
       <p>
         Les présentes conditions sont soumises au droit français. En cas de
         litige, une solution amiable sera recherchée avant toute action
-        judiciaire, auprès des tribunaux compétents de [À COMPLÉTER — ville].
+        judiciaire, auprès des tribunaux compétents de Nantes.
       </p>
 
       <h2>12. Contact</h2>

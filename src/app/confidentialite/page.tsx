@@ -18,7 +18,7 @@ export default function ConfidentialitePage() {
 
       <h2>1. Responsable du traitement</h2>
       <p>
-        Le responsable du traitement est [À COMPLÉTER — nom de la société],
+        Le responsable du traitement est Kenzo S.,
         joignable à <a href="mailto:contact@echo.fr">contact@echo.fr</a>.
       </p>
 
@@ -30,7 +30,7 @@ export default function ConfidentialitePage() {
         </li>
         <li>
           <strong>Données de profil</strong> : métier, cible, objectif, URL
-          LinkedIn (facultative), anciens posts collés, couleurs de marque.
+          LinkedIn, anciens posts collés, couleurs de marque.
         </li>
         <li>
           <strong>Mémoire identitaire</strong> : convictions, anecdotes,
@@ -72,10 +72,6 @@ export default function ConfidentialitePage() {
         <li>
           <strong>Anthropic</strong> — génération de texte par IA (ton profil et
           tes anciens posts sont transmis pour produire le contenu).
-        </li>
-        <li>
-          <strong>fal.ai</strong> — génération d&apos;images (si tu utilises
-          cette option).
         </li>
         <li>
           <strong>Vercel</strong> — hébergement de l&apos;application.
