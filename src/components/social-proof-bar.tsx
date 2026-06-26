@@ -7,13 +7,14 @@ type Metric = {
   decimals?: number;
   suffix?: string;
   label: string;
+  staticValue?: boolean;
 };
 
 const METRICS: Metric[] = [
   { value: 10, label: "beta-testeur" },
   { value: 50, label: "posts générés" },
   { value: 4.9, decimals: 1, suffix: "/5", label: "note moyenne" },
-  { value: 7, suffix: "h", label: "gagnées / mois" },
+  { value: 7, suffix: "h", label: "gagnées / mois", staticValue: true },
 ];
 
 function formatNumber(n: number, decimals: number) {
@@ -26,10 +27,12 @@ function formatNumber(n: number, decimals: number) {
 function Counter({ metric }: { metric: Metric }) {
   const ref = useRef<HTMLDivElement>(null);
   const started = useRef(false);
-  const [display, setDisplay] = useState(0);
+  const [display, setDisplay] = useState(metric.staticValue ? metric.value : 0);
   const decimals = metric.decimals ?? 0;
 
   useEffect(() => {
+    if (metric.staticValue) return;
+
     const el = ref.current;
     if (!el) return;
 
@@ -57,7 +60,7 @@ function Counter({ metric }: { metric: Metric }) {
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [metric.value]);
+  }, [metric.staticValue, metric.value]);
 
   return (
     <div

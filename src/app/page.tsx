@@ -4,6 +4,8 @@ import { SocialProofBar } from "@/components/social-proof-bar";
 import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { PricingSection } from "@/components/pricing-section";
+import { LinkedInPostMockup } from "@/components/linkedin-post-mockup";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
@@ -158,8 +160,49 @@ export default function Home() {
             <p className="mx-auto mt-4 max-w-xl text-[#666]">
             La première chose qu&apos;Echo fait quand tu n&apos;as rien en tête : te proposer 9 idées adaptées à ton métier, ta cible et tes sujets passés.
             Tu choisis une direction. Il te pose deux ou trois questions pour que le post soit concret et personnel. Puis il rédige dans ton style.
-            En moins de 10 minutes, de zéro à prêt à publier.
+            En moins de 10 minutes, de zéro à prêt à publier. En moins de 10 minutes par post, tu récupères en moyenne 7h chaque mois.
             </p>
+          </div>
+
+          {/* Ciblage par segment */}
+          <div className="mt-16">
+            <div className="text-center">
+              <h2 className="text-3xl font-medium md:text-4xl">
+                Fait pour toi, si tu construis quelque chose.
+              </h2>
+            </div>
+
+            <div className="mt-10 grid gap-5 md:grid-cols-3">
+              {[
+                {
+                  title: "Freelance & consultant",
+                  text: "Tu vends ton expertise. LinkedIn est ton canal numéro un. Mais entre les missions, la veille et l'admin, les posts passent à la trappe.",
+                  cta: "Je teste pour mon activité →",
+                },
+                {
+                  title: "Dirigeant de TPE / PME",
+                  text: "Tu as des choses à dire sur ton secteur. Mais tu n'as pas le temps d'écrire, et tu ne veux pas que ça sonne creux.",
+                  cta: "Je teste pour mon entreprise →",
+                },
+                {
+                  title: "Solopreneur / créateur",
+                  text: "Tu construis en public. Tu sais que la régularité compte. Mais trouver quoi dire chaque semaine, c'est le truc qui coince.",
+                  cta: "Je teste pour mon projet →",
+                },
+              ].map((segment, i) => (
+                <Reveal key={segment.title} delay={i * 120}>
+                  <div className="flex h-full flex-col rounded-2xl border-[0.5px] border-[#e5e5e5] bg-[#f8f8f8] p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
+                    <h3 className="text-lg font-semibold">{segment.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-[#666]">
+                      {segment.text}
+                    </p>
+                    <Button asChild className="mt-6">
+                      <Link href="/sign-up">{segment.cta}</Link>
+                    </Button>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -190,6 +233,84 @@ export default function Home() {
                 </div>
               </Reveal>
             ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <Button asChild size="lg">
+              <Link href="/sign-up">Générer mes 9 premières idées →</Link>
+            </Button>
+          </div>
+
+          {/* Preuve visuelle */}
+          <div className="mt-24">
+            <div className="text-center">
+              <h2 className="text-3xl font-medium md:text-4xl">
+                Voici ce que ça donne.
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-[#666]">
+                Des posts réels, générés par Echo, publiés tels quels.
+              </p>
+            </div>
+
+            <div className="mt-12 flex flex-col items-stretch justify-center gap-6 lg:flex-row">
+              {[
+                {
+                  initials: "MD",
+                  name: "Marie D.",
+                  role: "Consultante RH indépendante",
+                  reactions: 47,
+                  comments: "12 commentaires",
+                  content: `J'ai mis 3 ans à comprendre pourquoi mes recrutements échouaient.
+
+Ce n'était pas le profil. Ce n'était pas le salaire.
+
+C'était le brief.
+
+Quand le manager ne sait pas vraiment ce qu'il cherche, personne ne peut recruter correctement.
+
+Aujourd'hui, avant chaque mission, je passe 1h à recadrer le besoin. Résultat : 80% de mes placements tiennent au-delà de 6 mois.
+
+Le recrutement commence avant le premier CV.`,
+                },
+                {
+                  initials: "TM",
+                  name: "Thomas M.",
+                  role: "Dirigeant TPE",
+                  reactions: 47,
+                  comments: "12 commentaires",
+                  content: `On a failli refuser notre plus gros contrat de l'année.
+
+Le client voulait un délai de 10 jours. On était à 3 semaines minimum.
+
+Au lieu de dire non, on a proposé une livraison partielle à J+10 avec la suite à J+21.
+
+Il a dit oui. Et il nous a recommandé deux fois depuis.
+
+Le non réflexe est souvent une erreur. La vraie question : qu'est-ce qu'on peut faire ?`,
+                },
+                {
+                  initials: "LR",
+                  name: "Lucie R.",
+                  role: "Freelance marketing",
+                  reactions: 47,
+                  comments: "12 commentaires",
+                  content: `Personne ne m'a appris à facturer. J'ai appris à mes dépens.
+
+Première année : taux horaire trop bas, clients qui négocient, retards de paiement.
+
+Ce que j'ai changé :
+→ Forfaits uniquement, plus de taux horaire
+→ Acompte 50% à la commande
+→ Relance automatique à J+3
+
+Résultat : zéro impayé depuis 14 mois. Et des clients qui respectent le cadre parce que moi je le pose.`,
+                },
+              ].map((post, i) => (
+                <Reveal key={post.name} delay={i * 120}>
+                  <LinkedInPostMockup {...post} />
+                </Reveal>
+              ))}
+            </div>
           </div>
 
           {/* Avant / Après */}
@@ -238,12 +359,9 @@ export default function Home() {
 
           {/* CTA de section */}
           <div className="mt-12 text-center">
-            <Link
-              href="/sign-up"
-              className="inline-block rounded-lg bg-[#6c63ff] px-7 py-3.5 font-semibold text-white transition hover:opacity-90"
-            >
-              Générer mes 4 premiers posts →
-            </Link>
+            <Button asChild size="lg">
+              <Link href="/sign-up">Générer mes 4 premiers posts →</Link>
+            </Button>
             <p className="mt-3 text-sm text-[#666]">
               Gratuit · Sans carte bancaire · 4 posts inclus pour tester
             </p>
@@ -310,29 +428,78 @@ export default function Home() {
             ))}
           </div>
 
-          {/* CTA de section */}
-          <div className="mt-10 rounded-2xl bg-white p-8 text-center">
-            <p className="text-lg font-medium text-[#111]">
-              Encore un doute ? Le plus simple, c&apos;est d&apos;essayer.
-            </p>
-            <p className="mt-1 text-sm text-[#666]">
-              C&apos;est gratuit, sans carte bancaire, et tu peux tester avec 4
-              posts inclus.
-            </p>
-            <Link
-              href="/sign-up"
-              className="mt-5 inline-block rounded-lg bg-[#6c63ff] px-7 py-3.5 font-semibold text-white transition hover:opacity-90"
-            >
-              Générer mes 4 premiers posts →
-            </Link>
+          <div className="mt-10 text-center">
+            <Button asChild size="lg">
+              <Link href="/sign-up">
+                Prêt à ne plus chercher quoi publier ? → Essayer gratuitement
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* 8. Section Tarifs */}
+      {/* 8. Ancrage valeur avant tarifs */}
+      <section className="bg-white px-6 py-16">
+        <div className="mx-auto max-w-5xl">
+          <div className="text-center">
+            <p className="mx-auto max-w-2xl text-lg font-medium text-[#111]">
+              7h / mois. C&apos;est ce que récupèrent en moyenne les utilisateurs
+              Echo en arrêtant de chercher quoi écrire.
+            </p>
+          </div>
+
+          <div className="mt-12 rounded-2xl border border-[#e5e5e5] bg-white p-6 shadow-sm md:p-8">
+            <h3 className="text-center text-2xl font-medium md:text-3xl">
+              19€/mois. Soit moins qu&apos;une heure de ghostwriting.
+            </h3>
+
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {[
+                {
+                  title: "Ghostwriter freelance",
+                  price: "300–500€ / post",
+                  label: "Pour un seul post, sans mémoire de votre style",
+                },
+                {
+                  title: "Agence de communication",
+                  price: "800–2 000€ / mois",
+                  label: "Avec délais, briefs, allers-retours",
+                },
+                {
+                  title: "Echo ✦",
+                  price: "19€ / mois",
+                  label: "Posts illimités, dans ton style, en 10 minutes",
+                  featured: true,
+                },
+              ].map((option) => (
+                <div
+                  key={option.title}
+                  className={`rounded-xl border p-5 ${
+                    option.featured
+                      ? "border-primary/30 bg-primary/10"
+                      : "border-[#e5e5e5] bg-[#f8f8f8]"
+                  }`}
+                >
+                  <div className="text-sm font-semibold text-[#111]">
+                    {option.title}
+                  </div>
+                  <div className="mt-3 text-2xl font-medium text-[#111]">
+                    {option.price}
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-[#666]">
+                    {option.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. Section Tarifs */}
       <PricingSection />
 
-      {/* 9. Section Témoignages */}
+      {/* 10. Section Témoignages */}
       <section id="demo" className="bg-[#f8f8f8] px-6 py-20">
         <div className="mx-auto max-w-5xl">
           <div className="text-center">
@@ -350,6 +517,8 @@ export default function Home() {
                 initials: "SL",
                 name: "Sophie L.",
                 role: "Consultante RH indépendante",
+                published: "Post publié il y a 3 jours",
+                avatarColor: "bg-indigo-100 text-indigo-700",
                 quote:
                   "Le vrai déclic, c'est la mémoire. Echo reprend mes angles et me pousse à ajouter du concret quand je suis trop vague.",
               },
@@ -357,6 +526,8 @@ export default function Home() {
                 initials: "MK",
                 name: "Marc K.",
                 role: "Dirigeant PME, secteur bâtiment",
+                published: "Post publié il y a 5 jours",
+                avatarColor: "bg-emerald-100 text-emerald-700",
                 quote:
                   "Le score dwell time et le garde-fou thématique m'aident à améliorer mes posts avant de publier.",
               },
@@ -364,33 +535,49 @@ export default function Home() {
                 initials: "AL",
                 name: "Axel L.",
                 role: "Freelance marketing digital",
+                published: "Post publié il y a 6 jours",
+                avatarColor: "bg-amber-100 text-amber-700",
                 quote:
                   "Je colle mes notes, Echo extrait la matière et me demande des précisions quand il manque une vraie expérience.",
               },
             ].map((t, i) => (
               <Reveal key={t.initials} delay={i * 120}>
-                <div className="h-full rounded-xl border border-[#e5e5e5] bg-white p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                <div className="relative h-full rounded-xl border border-[#e5e5e5] bg-white p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                  <div className="absolute left-5 top-3 text-4xl font-serif leading-none text-primary/20">
+                    &quot;
+                  </div>
                   <div className="text-sm font-medium text-[#6c63ff]">
                     Retour utilisateur
                   </div>
-                  <p className="mt-3 italic text-[#444]">“{t.quote}”</p>
+                  <p className="mt-5 italic text-[#444]">“{t.quote}”</p>
                   <div className="mt-5 flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#eeecff] text-sm font-bold text-[#6c63ff]">
+                    <div className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold ${t.avatarColor}`}>
                       {t.initials}
                     </div>
                     <div>
                       <div className="text-sm font-semibold">{t.name}</div>
-                      <div className="text-xs text-[#666]">{t.role}</div>
+                      <div className="text-xs italic text-[#666]">{t.role}</div>
+                      <div className="text-xs text-[#999]">{t.published}</div>
                     </div>
                   </div>
                 </div>
               </Reveal>
             ))}
           </div>
+
+          <div className="mt-10 rounded-2xl border border-[#e5e5e5] bg-white p-6 text-center">
+            <p className="text-sm text-[#666]">
+              Ces retours proviennent de nos 10 premiers bêta-testeurs. Accès
+              anticipé encore disponible.
+            </p>
+            <Button asChild variant="link" className="mt-2">
+              <Link href="/sign-up">Rejoindre maintenant</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* 10. Section CTA Final */}
+      {/* 11. Section CTA Final */}
       <section className="bg-[#1a1a2e] px-6 py-20 text-center text-white">
         <div className="mx-auto max-w-2xl">
           <h2 className="text-3xl font-medium md:text-4xl">
