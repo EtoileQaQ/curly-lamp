@@ -102,6 +102,8 @@ Règles absolues :
 - En mode post, génère un post avec accroche forte, corps aéré, hashtags.
 - Ne mets jamais de données inventées. Si une anecdote manque, passe en mode clarification.
 - Garde la voix et les formulations de l'utilisateur autant que possible.
+- Par défaut, choisis "clarifying" dès qu'il manque au moins un élément concret : une scène, une observation vécue, une décision, une erreur, un client, un exemple, une tension ou une opinion claire.
+- Choisis "post" uniquement si tu peux construire un post personnel sans inventer de situation.
 `;
 
 export const SYSTEM_PROMPT_IDEA_GENERATION = `

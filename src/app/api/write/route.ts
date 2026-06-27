@@ -38,6 +38,28 @@ function isWriteResponse(value: unknown): value is WriteResponse {
   return false;
 }
 
+function shouldAskForClarification(idea: string, memoryBlock: string) {
+  const normalizedIdea = idea.replace(/\s+/g, " ").trim();
+  const hasRichIdea = normalizedIdea.length >= 90;
+  const hasUsableMemory =
+    memoryBlock.trim().length >= 450 && memoryBlock !== "Aucune";
+
+  return !hasRichIdea && !hasUsableMemory;
+}
+
+function buildClarifyingQuestions(idea: string): WriteResponse {
+  return {
+    mode: "clarifying",
+    questions: `Ton idée est intéressante, mais il me manque une situation concrète pour éviter un post générique.
+
+1. Qu'est-ce qui s'est passé exactement ? Donne-moi une scène, un client, une discussion, une erreur ou une décision.
+2. Qu'est-ce que tu as compris ou changé après ça ?
+3. Quelle opinion veux-tu défendre avec ce post ?
+
+Réponds directement sous ces questions, même en vrac.`,
+  };
+}
+
 export async function POST(request: Request) {
   const { userId } = await auth();
   if (!userId) {
@@ -113,6 +135,13 @@ export async function POST(request: Request) {
   const identityMemory = memoryBlock || "Aucune";
   const additionalInstruction =
     instruction && typeof instruction === "string" ? instruction : "Aucune";
+
+  if (
+    input.mode === "generate" &&
+    shouldAskForClarification(input.idea, identityMemory)
+  ) {
+    return NextResponse.json(buildClarifyingQuestions(input.idea));
+  }
 
   const baseContext = `Voici le contexte éditorial de l'utilisateur :
 
