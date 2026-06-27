@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import {
@@ -86,9 +86,20 @@ export function RepurposeStudio() {
       { matiere_suffisante: boolean; raison?: string; questions?: string[] }
     >()
   );
+  // Annule l'appel IA en cours (analyse ou génération) si l'utilisateur relance
+  // ou quitte la page, pour ne pas laisser tourner un appel Anthropic abandonné.
+  const abortRef = useRef<AbortController | null>(null);
+
+  // Au démontage, on annule tout appel en cours.
+  useEffect(() => () => abortRef.current?.abort(), []);
 
   // Étape 1 : analyse du contenu collé.
   async function analyze() {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    const { signal } = controller;
+
     setError(null);
     setAnalyzing(true);
     try {
@@ -96,6 +107,7 @@ export function RepurposeStudio() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ source }),
+        signal,
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Analyse impossible.");
@@ -104,9 +116,10 @@ export function RepurposeStudio() {
       if (!angle.trim()) setAngle(data.angle_suggere ?? "");
       setStep("analyzed");
     } catch (err) {
+      if (controller.signal.aborted) return;
       setError(err instanceof Error ? err.message : "Erreur inconnue.");
     } finally {
-      setAnalyzing(false);
+      if (abortRef.current === controller) setAnalyzing(false);
     }
   }
 
@@ -115,6 +128,11 @@ export function RepurposeStudio() {
     skipMatterCheck?: boolean;
     dialogueAnswers?: string;
   }) {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    const { signal } = controller;
+
     setError(null);
     setGenerating(true);
     setScore(null);
@@ -131,6 +149,7 @@ export function RepurposeStudio() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ userInput }),
+            signal,
           });
           check = await checkRes.json().catch(() => null);
           if (checkRes.ok && check) {
@@ -162,6 +181,7 @@ export function RepurposeStudio() {
           source,
           dialogueAnswers: options?.dialogueAnswers,
         }),
+        signal,
       });
 
       // Les erreurs (quota, limite, etc.) arrivent en JSON, pas en flux.
@@ -183,13 +203,15 @@ export function RepurposeStudio() {
       for (;;) {
         const { done, value } = await reader.read();
         if (done) break;
+        if (signal.aborted) return;
         acc += decoder.decode(value, { stream: true });
         setContent(acc);
       }
     } catch (err) {
+      if (signal.aborted) return;
       setError(err instanceof Error ? err.message : "Erreur inconnue.");
     } finally {
-      setGenerating(false);
+      if (abortRef.current === controller) setGenerating(false);
     }
   }
 

@@ -9,7 +9,9 @@ import {
 } from "@/lib/anthropic";
 import { getMemoryForPrompt } from "@/lib/memory";
 import { SYSTEM_PROMPT_MATTER_CHECK } from "@/lib/prompts";
-import { checkAiRateLimit } from "@/lib/ratelimit";
+import { checkAiRateLimit, checkAuxAiLimit } from "@/lib/ratelimit";
+import { isApiDisabled } from "@/lib/flags";
+import { logAiUsage } from "@/lib/usage";
 
 const MatterCheckSchema = z.object({
   userInput: z.string().min(1).max(10000),
@@ -78,15 +80,26 @@ export async function POST(request: Request) {
     return NextResponse.json(FALLBACK);
   }
 
+  // Garde-fou non bloquant : kill-switch ou plafond quotidien atteint → on ne
+  // dépense pas de tokens et on laisse la génération suivre son cours.
+  if (await isApiDisabled()) {
+    return NextResponse.json(FALLBACK);
+  }
+  const auxLimit = await checkAuxAiLimit(userId);
+  if (!auxLimit.success) {
+    return NextResponse.json(FALLBACK);
+  }
+
   try {
-    const message = await anthropic.messages.create({
-      model: CLAUDE_MODEL,
-      max_tokens: 500,
-      system: SYSTEM_PROMPT_MATTER_CHECK,
-      messages: [
-        {
-          role: "user",
-          content: `Voici la matière disponible pour générer un post LinkedIn authentique :
+    const message = await anthropic.messages.create(
+      {
+        model: CLAUDE_MODEL,
+        max_tokens: 500,
+        system: SYSTEM_PROMPT_MATTER_CHECK,
+        messages: [
+          {
+            role: "user",
+            content: `Voici la matière disponible pour générer un post LinkedIn authentique :
 
 Mémoire identitaire : ${identityMemory || "Aucune mémoire identitaire disponible."}
 Idée ou sujet fourni : ${userInput}
@@ -99,8 +112,18 @@ Réponds UNIQUEMENT en JSON :
   "raison": string,
   "questions": string[]
 }`,
-        },
-      ],
+          },
+        ],
+      },
+      { signal: request.signal }
+    );
+
+    await logAiUsage({
+      userId,
+      route: "matter-check",
+      model: CLAUDE_MODEL,
+      inputTokens: message.usage.input_tokens,
+      outputTokens: message.usage.output_tokens,
     });
 
     const parsed = safeParseJson<MatterCheck>(extractText(message.content));

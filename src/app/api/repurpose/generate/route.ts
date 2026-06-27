@@ -6,7 +6,9 @@ import { anthropic, CLAUDE_MODEL } from "@/lib/anthropic";
 import { getIdentityMemoryBlock } from "@/lib/identity";
 import { hasReachedFreeLimit } from "@/lib/plan";
 import { SYSTEM_PROMPT_POST_GENERATION } from "@/lib/prompts";
-import { checkAiRateLimit } from "@/lib/ratelimit";
+import { checkAiRateLimit, checkDailyGenerationLimit } from "@/lib/ratelimit";
+import { isApiDisabled } from "@/lib/flags";
+import { logAiUsage } from "@/lib/usage";
 
 const GenerateSchema = z.object({
   points: z.array(z.string().max(1000)).max(10).default([]),
@@ -21,10 +23,27 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 
+  // Kill-switch d'urgence : coupe toute génération IA si activé.
+  if (await isApiDisabled()) {
+    return NextResponse.json(
+      { error: "La génération est momentanément désactivée. Réessaie plus tard." },
+      { status: 503 }
+    );
+  }
+
   const { success } = await checkAiRateLimit(userId);
   if (!success) {
     return NextResponse.json(
       { error: "Trop de requêtes. Réessaie dans une minute." },
+      { status: 429 }
+    );
+  }
+
+  // Plafond quotidien anti-abus (s'applique aussi aux comptes Pro "illimités").
+  const daily = await checkDailyGenerationLimit(userId);
+  if (!daily.success) {
+    return NextResponse.json(
+      { error: "Limite quotidienne de génération atteinte. Réessaie demain." },
       { status: 429 }
     );
   }
@@ -111,20 +130,30 @@ par des généralités — si un élément essentiel
 est absent, signale-le avant de générer.`;
 
   try {
-    // Streaming : texte renvoyé au fur et à mesure de sa génération.
-    const aiStream = await anthropic.messages.stream({
-      model: CLAUDE_MODEL,
-      max_tokens: 1500,
-      system: SYSTEM_PROMPT_POST_GENERATION,
-      messages: [{ role: "user", content: userPrompt }],
-    });
+    // Streaming : texte renvoyé au fur et à mesure de sa génération. Le signal
+    // annule l'appel Anthropic si le client se déconnecte (économie de tokens).
+    const aiStream = await anthropic.messages.stream(
+      {
+        model: CLAUDE_MODEL,
+        max_tokens: 1500,
+        system: SYSTEM_PROMPT_POST_GENERATION,
+        messages: [{ role: "user", content: userPrompt }],
+      },
+      { signal: request.signal }
+    );
 
     const encoder = new TextEncoder();
+    let inputTokens = 0;
+    let outputTokens = 0;
     const readable = new ReadableStream({
       async start(controller) {
         try {
           for await (const event of aiStream) {
-            if (
+            if (event.type === "message_start") {
+              inputTokens = event.message.usage.input_tokens;
+            } else if (event.type === "message_delta") {
+              outputTokens = event.usage.output_tokens;
+            } else if (
               event.type === "content_block_delta" &&
               event.delta.type === "text_delta"
             ) {
@@ -135,6 +164,14 @@ est absent, signale-le avant de générer.`;
         } catch (err) {
           console.error("[/api/repurpose/generate] stream", err);
           controller.error(err);
+        } finally {
+          await logAiUsage({
+            userId,
+            route: "repurpose-generate",
+            model: CLAUDE_MODEL,
+            inputTokens,
+            outputTokens,
+          });
         }
       },
     });

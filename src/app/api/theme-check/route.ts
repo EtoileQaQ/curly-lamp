@@ -9,7 +9,9 @@ import {
   safeParseJson,
 } from "@/lib/anthropic";
 import { SYSTEM_PROMPT_REDUNDANCY } from "@/lib/prompts";
-import { checkAiRateLimit } from "@/lib/ratelimit";
+import { checkAiRateLimit, checkAuxAiLimit } from "@/lib/ratelimit";
+import { isApiDisabled } from "@/lib/flags";
+import { logAiUsage } from "@/lib/usage";
 
 const ThemeSchema = z.object({
   idea: z.string().min(1).max(300),
@@ -67,6 +69,16 @@ export async function POST(request: Request) {
     return NextResponse.json(NONE);
   }
 
+  // Garde-fou non bloquant : kill-switch ou plafond quotidien atteint → pas
+  // d'alerte plutôt qu'une erreur (ce garde-fou ne doit jamais bloquer).
+  if (await isApiDisabled()) {
+    return NextResponse.json(NONE);
+  }
+  const auxLimit = await checkAuxAiLimit(userId);
+  if (!auxLimit.success) {
+    return NextResponse.json(NONE);
+  }
+
   const list = posts
     .map(
       (p, i) =>
@@ -75,14 +87,15 @@ export async function POST(request: Request) {
     .join("\n");
 
   try {
-    const message = await anthropic.messages.create({
-      model: CLAUDE_MODEL,
-      max_tokens: 600,
-      system: SYSTEM_PROMPT_REDUNDANCY,
-      messages: [
-        {
-          role: "user",
-          content: `Voici le sujet que l'utilisateur veut traiter aujourd'hui :
+    const message = await anthropic.messages.create(
+      {
+        model: CLAUDE_MODEL,
+        max_tokens: 600,
+        system: SYSTEM_PROMPT_REDUNDANCY,
+        messages: [
+          {
+            role: "user",
+            content: `Voici le sujet que l'utilisateur veut traiter aujourd'hui :
 ${idea}
 
 Voici ses 20 derniers posts LinkedIn générés (du plus récent au plus ancien) :
@@ -94,8 +107,18 @@ Réponds uniquement avec un JSON valide (guillemets doubles), sans texte autour 
 {"alerte": boolean, "niveau": "aucun" | "attention" | "repetition", "message": "explication courte et bienveillante, max 1 phrase", "posts_similaires": ["titres des 1 à 3 posts trop proches, si applicable"], "angle_alternatif": "suggestion d'un angle différent pour traiter quand même ce sujet de façon fraîche"}
 
 Règles : "attention" si un sujet proche a été abordé récemment ; "repetition" si le sujet revient souvent ; "aucun" sinon (et dans ce cas, posts_similaires vide).`,
-        },
-      ],
+          },
+        ],
+      },
+      { signal: request.signal }
+    );
+
+    await logAiUsage({
+      userId,
+      route: "theme-check",
+      model: CLAUDE_MODEL,
+      inputTokens: message.usage.input_tokens,
+      outputTokens: message.usage.output_tokens,
     });
 
     const parsed = safeParseJson<ThemeCheck>(extractText(message.content));

@@ -9,6 +9,8 @@ import {
 } from "@/lib/anthropic";
 import { SYSTEM_PROMPT_IDEA_GENERATION } from "@/lib/prompts";
 import { checkAiRateLimit, checkIdeaGenerationLimit } from "@/lib/ratelimit";
+import { isApiDisabled } from "@/lib/flags";
+import { logAiUsage } from "@/lib/usage";
 
 type IdeaAngle =
   | "retour_experience"
@@ -105,6 +107,14 @@ export async function POST(request: Request) {
   const { userId } = await auth();
   if (!userId) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+  }
+
+  // Kill-switch d'urgence : coupe toute génération IA si activé.
+  if (await isApiDisabled()) {
+    return NextResponse.json(
+      { error: "La génération est momentanément désactivée. Réessaie plus tard." },
+      { status: 503 }
+    );
   }
 
   const body = await request.json().catch(() => null);
@@ -304,12 +314,23 @@ ${priorityZone ? `- Zone prioritaire demandée par l'utilisateur : ${priorityZon
 
   // 3) Appel à Claude.
   try {
-    const message = await anthropic.messages.create({
+    const message = await anthropic.messages.create(
+      {
+        model: CLAUDE_MODEL,
+        max_tokens: 2000,
+        temperature: 0.9,
+        system: fullSystem,
+        messages: [{ role: "user", content: userPrompt }],
+      },
+      { signal: request.signal }
+    );
+
+    await logAiUsage({
+      userId,
+      route: "ideas",
       model: CLAUDE_MODEL,
-      max_tokens: 2000,
-      temperature: 0.9,
-      system: fullSystem,
-      messages: [{ role: "user", content: userPrompt }],
+      inputTokens: message.usage.input_tokens,
+      outputTokens: message.usage.output_tokens,
     });
 
     const text = extractText(message.content);

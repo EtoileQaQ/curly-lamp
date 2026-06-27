@@ -41,6 +41,32 @@ const ideaGenerationRatelimit = isConfigured
     })
   : null;
 
+// Plafond quotidien de GÉNÉRATIONS de posts (write + repurposing), appliqué à
+// TOUS les utilisateurs, y compris Pro "illimité". Empêche qu'un seul compte
+// (ou un compte compromis) génère des milliers de posts/jour et fasse exploser
+// la facture Anthropic.
+const dailyGenerationRatelimit = isConfigured
+  ? new Ratelimit({
+      redis: Redis.fromEnv(),
+      limiter: Ratelimit.fixedWindow(100, "24 h"),
+      prefix: "echo:gen:daily",
+      analytics: true,
+    })
+  : null;
+
+// Plafond quotidien des appels IA AUXILIAIRES (matter-check, dwell-time,
+// theme-check, repurpose/analyze). Ces routes appellent Claude sans consommer
+// le quota de posts : sans plafond, un utilisateur authentifié pourrait les
+// spammer (jusqu'à ~14 400/jour via le seul rate limit minute).
+const auxAiRatelimit = isConfigured
+  ? new Ratelimit({
+      redis: Redis.fromEnv(),
+      limiter: Ratelimit.fixedWindow(500, "24 h"),
+      prefix: "echo:aux:daily",
+      analytics: true,
+    })
+  : null;
+
 export type RateLimitResult = {
   success: boolean;
   /** Timestamp (ms) auquel le quota se réinitialise. */
@@ -71,5 +97,28 @@ export async function checkIdeaGenerationLimit(
   }
   const { success, reset, remaining } =
     await ideaGenerationRatelimit.limit(userId);
+  return { success, reset, remaining };
+}
+
+/** Plafond quotidien de générations de posts (write + repurposing). */
+export async function checkDailyGenerationLimit(
+  userId: string
+): Promise<RateLimitResult> {
+  if (!dailyGenerationRatelimit) {
+    return { success: true, reset: 0, remaining: Infinity };
+  }
+  const { success, reset, remaining } =
+    await dailyGenerationRatelimit.limit(userId);
+  return { success, reset, remaining };
+}
+
+/** Plafond quotidien des appels IA auxiliaires (analyse, scoring, garde-fous). */
+export async function checkAuxAiLimit(
+  userId: string
+): Promise<RateLimitResult> {
+  if (!auxAiRatelimit) {
+    return { success: true, reset: 0, remaining: Infinity };
+  }
+  const { success, reset, remaining } = await auxAiRatelimit.limit(userId);
   return { success, reset, remaining };
 }

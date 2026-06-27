@@ -65,6 +65,9 @@ export function PostEditor({
       { matiere_suffisante: boolean; raison?: string; questions?: string[] }
     >()
   );
+  // Permet d'annuler une génération en cours (changement de page, régénération)
+  // pour ne pas laisser tourner un appel Anthropic abandonné.
+  const abortRef = useRef<AbortController | null>(null);
 
   // Demande le score de dwell time pour un texte donné.
   const computeScore = useCallback(async (text: string) => {
@@ -91,6 +94,12 @@ export function PostEditor({
       instruction?: string,
       options?: { skipMatterCheck?: boolean; dialogueAnswers?: string }
     ) => {
+      // Annule toute génération précédente encore en cours.
+      abortRef.current?.abort();
+      const controller = new AbortController();
+      abortRef.current = controller;
+      const { signal } = controller;
+
       setLoading(true);
       setError(null);
       setScore(null);
@@ -105,6 +114,7 @@ export function PostEditor({
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ userInput }),
+              signal,
             });
             check = await checkRes.json().catch(() => null);
             if (checkRes.ok && check) {
@@ -136,6 +146,7 @@ export function PostEditor({
             instruction,
             dialogueAnswers: options?.dialogueAnswers,
           }),
+          signal,
         });
 
         // Les erreurs (quota, limite, etc.) arrivent en JSON, pas en flux.
@@ -157,6 +168,7 @@ export function PostEditor({
         for (;;) {
           const { done, value } = await reader.read();
           if (done) break;
+          if (signal.aborted) return;
           acc += decoder.decode(value, { stream: true });
           setContent(acc);
         }
@@ -165,9 +177,12 @@ export function PostEditor({
         }
         // Score en mode manuel : rien ne se calcule automatiquement.
       } catch (err) {
+        // Annulation volontaire (démontage / régénération) : on ignore.
+        if (signal.aborted) return;
         setError(err instanceof Error ? err.message : "Erreur inconnue.");
       } finally {
-        setLoading(false);
+        // Ne touche l'état que si cette génération est toujours la courante.
+        if (abortRef.current === controller) setLoading(false);
       }
     },
     [idea, router]
@@ -194,8 +209,11 @@ export function PostEditor({
   }
 
   // Génération automatique au chargement (avec l'angle imposé s'il y en a un).
+  // Au démontage, on annule la génération en cours pour ne pas laisser un appel
+  // Anthropic tourner dans le vide.
   useEffect(() => {
     generate(initialInstruction);
+    return () => abortRef.current?.abort();
   }, [generate, initialInstruction]);
 
   return (

@@ -8,7 +8,9 @@ import {
   safeParseJson,
 } from "@/lib/anthropic";
 import { SYSTEM_PROMPT_DWELL_TIME } from "@/lib/prompts";
-import { checkAiRateLimit } from "@/lib/ratelimit";
+import { checkAiRateLimit, checkAuxAiLimit } from "@/lib/ratelimit";
+import { isApiDisabled } from "@/lib/flags";
+import { logAiUsage } from "@/lib/usage";
 
 type ScoreResult = {
   score: number;
@@ -26,10 +28,27 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 
+  // Kill-switch d'urgence : coupe tout appel IA si activé.
+  if (await isApiDisabled()) {
+    return NextResponse.json(
+      { error: "Le service d'analyse est momentanément désactivé." },
+      { status: 503 }
+    );
+  }
+
   const { success } = await checkAiRateLimit(userId);
   if (!success) {
     return NextResponse.json(
       { error: "Trop de requêtes. Réessaie dans une minute." },
+      { status: 429 }
+    );
+  }
+
+  // Plafond quotidien des appels IA auxiliaires (anti-abus).
+  const auxLimit = await checkAuxAiLimit(userId);
+  if (!auxLimit.success) {
+    return NextResponse.json(
+      { error: "Limite quotidienne d'analyses atteinte. Réessaie demain." },
       { status: 429 }
     );
   }
@@ -46,14 +65,15 @@ export async function POST(request: Request) {
   const { content } = parsedInput.data;
 
   try {
-    const message = await anthropic.messages.create({
-      model: CLAUDE_MODEL,
-      max_tokens: 700,
-      system: SYSTEM_PROMPT_DWELL_TIME,
-      messages: [
-        {
-          role: "user",
-          content: `Analyse le post fourni selon ces critères :
+    const message = await anthropic.messages.create(
+      {
+        model: CLAUDE_MODEL,
+        max_tokens: 700,
+        system: SYSTEM_PROMPT_DWELL_TIME,
+        messages: [
+          {
+            role: "user",
+            content: `Analyse le post fourni selon ces critères :
 - Longueur : un post > 1200 caractères favorise le dwell time (+2 pts)
 - Questions intercalées : présence de questions dans le corps du texte (+1 pt)
 - Structure aérée : sauts de ligne réguliers, pas de blocs denses (+1 pt)
@@ -71,8 +91,18 @@ Post à analyser :
 """
 ${content}
 """`,
-        },
-      ],
+          },
+        ],
+      },
+      { signal: request.signal }
+    );
+
+    await logAiUsage({
+      userId,
+      route: "dwell-time",
+      model: CLAUDE_MODEL,
+      inputTokens: message.usage.input_tokens,
+      outputTokens: message.usage.output_tokens,
     });
 
     const parsed = safeParseJson<ScoreResult>(extractText(message.content));
