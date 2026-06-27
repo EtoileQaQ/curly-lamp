@@ -77,6 +77,10 @@ async function getOrCreateMiddlewareProfile(
       clerk_user_id: userId,
       onboarding_completed: false,
       onboarding_step: 0,
+      job: "Non renseigné",
+      audience: "Non renseignée",
+      goal: "Premier post LinkedIn",
+      sample_posts: "",
     }),
   });
 
