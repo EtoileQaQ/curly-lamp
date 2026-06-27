@@ -2,19 +2,41 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@clerk/nextjs/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { anthropic, CLAUDE_MODEL } from "@/lib/anthropic";
+import { anthropic, CLAUDE_MODEL, extractText } from "@/lib/anthropic";
 import { getIdentityMemoryBlock } from "@/lib/identity";
 import { hasReachedFreeLimit } from "@/lib/plan";
-import { SYSTEM_PROMPT_POST_GENERATION } from "@/lib/prompts";
+import { SYSTEM_PROMPT_WRITE_STRUCTURED } from "@/lib/prompts";
 import { checkAiRateLimit, checkDailyGenerationLimit } from "@/lib/ratelimit";
 import { isApiDisabled } from "@/lib/flags";
 import { logAiUsage } from "@/lib/usage";
 
-const WriteSchema = z.object({
-  idea: z.string().min(1).max(300),
-  instruction: z.string().max(500).optional(),
-  dialogueAnswers: z.string().max(5000).optional(),
-});
+const WriteSchema = z.discriminatedUnion("mode", [
+  z.object({
+    mode: z.literal("generate"),
+    idea: z.string().min(1).max(300),
+    instruction: z.string().max(500).optional(),
+  }),
+  z.object({
+    mode: z.literal("generate_from_clarification"),
+    originalIdea: z.string().min(1).max(300),
+    clarificationExchange: z.string().min(1).max(5000),
+    instruction: z.string().max(500).optional(),
+  }),
+]);
+
+type WriteResponse =
+  | { mode: "post"; content: string }
+  | { mode: "clarifying"; questions: string };
+
+function isWriteResponse(value: unknown): value is WriteResponse {
+  if (!value || typeof value !== "object") return false;
+  const payload = value as Partial<WriteResponse>;
+  if (payload.mode === "post") return typeof payload.content === "string";
+  if (payload.mode === "clarifying") {
+    return typeof payload.questions === "string";
+  }
+  return false;
+}
 
 export async function POST(request: Request) {
   const { userId } = await auth();
@@ -61,7 +83,12 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
-  const { idea, instruction, dialogueAnswers } = parsedInput.data;
+  const input = parsedInput.data;
+  const idea =
+    input.mode === "generate_from_clarification"
+      ? input.originalIdea
+      : input.idea;
+  const instruction = input.instruction;
 
   // On récupère le profil + les anciens posts (pour imiter le style).
   const supabase = createAdminClient();
@@ -87,7 +114,7 @@ export async function POST(request: Request) {
   const additionalInstruction =
     instruction && typeof instruction === "string" ? instruction : "Aucune";
 
-  const userPrompt = `Voici la matière pour construire ce post :
+  const baseContext = `Voici le contexte éditorial de l'utilisateur :
 
 STYLE D'ÉCRITURE DE L'UTILISATEUR :
 """
@@ -106,74 +133,68 @@ Contexte de l'utilisateur :
 - Objectif : ${profile.goal}
 
 CONSIGNE SUPPLÉMENTAIRE (si applicable) :
-${additionalInstruction}
+${additionalInstruction}`;
 
-MATIÈRE ADDITIONNELLE COLLECTÉE VIA DIALOGUE :
-${dialogueAnswers?.trim() || "Aucune"}
+  const userPrompt =
+    input.mode === "generate_from_clarification"
+      ? `${baseContext}
 
-Utilise ces éléments en priorité — 
-ils sont plus récents et plus spécifiques 
-que la mémoire de base.
+Idée de départ : "${input.originalIdea}"
 
-Structure ce post LinkedIn en partant uniquement 
-de cette matière. Ne complète pas ce qui manque 
-par des généralités — si un élément essentiel 
-est absent, signale-le avant de générer.`;
+Tu as posé des questions de clarification et l'utilisateur a répondu.
+Voici l'échange complet :
+---
+${input.clarificationExchange}
+---
+
+Maintenant génère le post LinkedIn en tenant compte de ces précisions.
+Réponds avec le JSON { "mode": "post", "content": "..." }.`
+      : `${baseContext}
+
+Idée de départ : "${input.idea}"
+
+Si cette idée suffit pour produire un post personnel et concret, réponds en mode "post".
+Si elle est trop vague ou manque d'anecdote, réponds en mode "clarifying".`;
 
   try {
-    // Streaming : on renvoie le texte au fur et à mesure de sa génération,
-    // pour un retour visuel immédiat côté utilisateur. Le signal de la requête
-    // permet d'annuler l'appel Anthropic si le client se déconnecte (économie).
-    const aiStream = await anthropic.messages.stream(
+    const message = await anthropic.messages.create(
       {
         model: CLAUDE_MODEL,
         max_tokens: 1500,
-        system: SYSTEM_PROMPT_POST_GENERATION,
+        system: SYSTEM_PROMPT_WRITE_STRUCTURED,
         messages: [{ role: "user", content: userPrompt }],
       },
       { signal: request.signal }
     );
 
-    const encoder = new TextEncoder();
-    let inputTokens = 0;
-    let outputTokens = 0;
-    const readable = new ReadableStream({
-      async start(controller) {
-        try {
-          for await (const event of aiStream) {
-            if (event.type === "message_start") {
-              inputTokens = event.message.usage.input_tokens;
-            } else if (event.type === "message_delta") {
-              outputTokens = event.usage.output_tokens;
-            } else if (
-              event.type === "content_block_delta" &&
-              event.delta.type === "text_delta"
-            ) {
-              controller.enqueue(encoder.encode(event.delta.text));
-            }
-          }
-          controller.close();
-        } catch (err) {
-          console.error("[/api/write] stream", err);
-          controller.error(err);
-        } finally {
-          await logAiUsage({
-            userId,
-            route: "write",
-            model: CLAUDE_MODEL,
-            inputTokens,
-            outputTokens,
-          });
-        }
-      },
+    await logAiUsage({
+      userId,
+      route: "write",
+      model: CLAUDE_MODEL,
+      inputTokens: message.usage.input_tokens,
+      outputTokens: message.usage.output_tokens,
     });
 
-    return new Response(readable, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "no-store",
-      },
-    });
+    const text = extractText(message.content);
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      return NextResponse.json(
+        { error: "Réponse IA invalide. Réessaie." },
+        { status: 502 }
+      );
+    }
+
+    if (!isWriteResponse(parsed)) {
+      return NextResponse.json(
+        { error: "Réponse IA incomplète. Réessaie." },
+        { status: 502 }
+      );
+    }
+
+    return NextResponse.json(parsed);
   } catch (err) {
     console.error("[/api/write]", err);
     return NextResponse.json(

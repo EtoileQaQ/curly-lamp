@@ -16,6 +16,11 @@ export async function savePost(formData: FormData) {
 
   const title = (formData.get("title") as string)?.trim() || "Sans titre";
   const content = (formData.get("content") as string)?.trim();
+  const writeMode = (formData.get("writeMode") as string | null)?.trim();
+
+  if (writeMode !== "post_ready") {
+    throw new Error("Réponds d'abord aux questions avant de valider le post.");
+  }
 
   if (!content) {
     redirect("/ideas");
