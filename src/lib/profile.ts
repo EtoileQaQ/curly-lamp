@@ -80,10 +80,6 @@ export async function getOrCreateProfile(
       clerk_user_id: clerkUserId,
       onboarding_completed: false,
       onboarding_step: 0,
-      job: "Non renseigné",
-      audience: "Non renseignée",
-      goal: "Premier post LinkedIn",
-      sample_posts: "",
       updated_at: now,
     })
     .select(PROFILE_SELECT)
