@@ -4,25 +4,15 @@ import { auth } from "@clerk/nextjs/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  getOrCreateProfile,
+  updateProfile,
+  type Persona,
+  type Profile,
+} from "@/lib/profile";
 
 export type OnboardingState = {
   error?: string;
-};
-
-const MAX_MEMORY_ENTRIES = 20;
-
-type MemoryCategory =
-  | "anecdote"
-  | "position"
-  | "expertise"
-  | "retour_experience"
-  | "style";
-
-type MemoryPayload = {
-  user_id: string;
-  category: MemoryCategory;
-  content: string;
-  source: "onboarding";
 };
 
 async function requireUserId() {
@@ -33,152 +23,130 @@ async function requireUserId() {
   return userId;
 }
 
-function getTrimmed(formData: FormData, name: string) {
-  return ((formData.get(name) as string | null) ?? "").trim();
+function clampStep(step: number) {
+  return Math.min(Math.max(step, 0), 4);
 }
 
-function getTrimmedAll(formData: FormData, name: string) {
-  return formData
-    .getAll(name)
-    .map((value) => String(value).trim())
-    .filter(Boolean);
-}
-
-function buildMemoryEntries(
-  userId: string,
-  formData: FormData
-): MemoryPayload[] {
-  const entries: MemoryPayload[] = [];
-
-  for (const content of getTrimmedAll(formData, "anecdotes")) {
-    entries.push({ user_id: userId, category: "anecdote", content, source: "onboarding" });
-  }
-
-  for (const content of getTrimmedAll(formData, "positions")) {
-    entries.push({ user_id: userId, category: "position", content, source: "onboarding" });
-  }
-
-  const expertise = getTrimmed(formData, "expertise");
-  if (expertise) {
-    entries.push({
-      user_id: userId,
-      category: "expertise",
-      content: expertise,
-      source: "onboarding",
-    });
-  }
-
-  const retourExperience = getTrimmed(formData, "retour_experience");
-  if (retourExperience) {
-    entries.push({
-      user_id: userId,
-      category: "retour_experience",
-      content: retourExperience,
-      source: "onboarding",
-    });
-  }
-
-  const samplePosts = getTrimmed(formData, "sample_posts");
-  if (samplePosts) {
-    entries.push({
-      user_id: userId,
-      category: "style",
-      content: samplePosts,
-      source: "onboarding",
-    });
-  }
-
-  return entries;
-}
-
-async function saveProfileAndMemory(formData: FormData, onboardingStep: number) {
+export async function loadOnboardingProfile(): Promise<Profile> {
   const userId = await requireUserId();
-  const job = (formData.get("job") as string)?.trim();
-  const audience = (formData.get("audience") as string)?.trim();
-  const goal = (formData.get("goal") as string)?.trim();
-  const samplePosts = (formData.get("sample_posts") as string)?.trim();
+  return getOrCreateProfile(userId);
+}
 
-  if (!job || !audience || !goal) {
+export async function saveOnboardingStep(step: number): Promise<OnboardingState> {
+  try {
+    const userId = await requireUserId();
+    await updateProfile(userId, { onboarding_step: clampStep(step) });
+    return {};
+  } catch (error) {
     return {
-      error: "Merci de remplir au minimum : métier, cible et objectif.",
+      error:
+        error instanceof Error ? error.message : "Impossible de sauvegarder l'étape.",
     };
   }
+}
 
-  const payload = {
-    user_id: userId,
-    job,
-    audience,
-    goal,
-    sample_posts: samplePosts || null,
-    onboarding_step: onboardingStep,
-    updated_at: new Date().toISOString(),
-  };
-
-  const supabase = createAdminClient();
-  const { error: profileError } = await supabase
-    .from("profiles")
-    .upsert(payload, { onConflict: "user_id" });
-
-  if (profileError) {
-    return { error: `Erreur d'enregistrement : ${profileError.message}` };
-  }
-
-  // On remplace les entrées d'onboarding existantes pour éviter les doublons
-  // quand l'utilisateur revient modifier son formulaire.
-  const { error: deleteError } = await supabase
-    .from("identity_memory")
-    .delete()
-    .eq("user_id", userId)
-    .eq("source", "onboarding");
-
-  if (deleteError) {
-    return { error: `Erreur mémoire : ${deleteError.message}` };
-  }
-
-  const entries = buildMemoryEntries(userId, formData);
-  if (entries.length === 0) {
+export async function savePersona(persona: Persona): Promise<OnboardingState> {
+  try {
+    const userId = await requireUserId();
+    await updateProfile(userId, { persona, onboarding_step: 1 });
     return {};
+  } catch (error) {
+    return {
+      error:
+        error instanceof Error ? error.message : "Impossible de sauvegarder le profil.",
+    };
   }
+}
 
-  const { count } = await supabase
-    .from("identity_memory")
-    .select("id", { count: "exact", head: true })
-    .eq("user_id", userId);
-
-  const remainingSlots = Math.max(0, MAX_MEMORY_ENTRIES - (count ?? 0));
-  const entriesToInsert = entries.slice(0, remainingSlots);
-
-  if (entriesToInsert.length > 0) {
-    const { error: insertError } = await supabase
-      .from("identity_memory")
-      .insert(entriesToInsert);
-
-    if (insertError) {
-      return { error: `Erreur mémoire : ${insertError.message}` };
+export async function saveFirstPostIdea(
+  idea: string
+): Promise<OnboardingState> {
+  try {
+    const userId = await requireUserId();
+    const trimmed = idea.trim();
+    if (trimmed.length < 30) {
+      return { error: "Ton idée doit contenir au moins 30 caractères." };
     }
+    await updateProfile(userId, {
+      first_post_idea: trimmed,
+      onboarding_step: 3,
+    });
+    return {};
+  } catch (error) {
+    return {
+      error:
+        error instanceof Error ? error.message : "Impossible de sauvegarder l'idée.",
+    };
   }
-
-  return {};
 }
 
-// Sauvegarde les étapes complétées quand l'utilisateur navigue dans le stepper.
-export async function saveOnboardingProgress(
-  formData: FormData
+export async function saveGeneratedFirstPost(
+  post: string
 ): Promise<OnboardingState> {
-  const step = Number(formData.get("onboarding_step") ?? 1);
-  return saveProfileAndMemory(formData, Math.min(Math.max(step, 1), 3));
+  try {
+    const userId = await requireUserId();
+    const trimmed = post.trim();
+    if (!trimmed) {
+      return { error: "Le post généré est vide." };
+    }
+    await updateProfile(userId, {
+      first_post_generated: trimmed,
+      onboarding_step: 4,
+    });
+    return {};
+  } catch (error) {
+    return {
+      error:
+        error instanceof Error ? error.message : "Impossible de sauvegarder le post.",
+    };
+  }
 }
 
-// Finalise l'onboarding puis redirige vers le dashboard.
-export async function completeOnboarding(
-  formData: FormData
-): Promise<OnboardingState> {
-  const result = await saveProfileAndMemory(formData, 4);
-  if (result.error) {
-    return result;
-  }
-  const { userId } = await auth();
-  if (userId) {
+export async function completeFirstPostOnboarding(): Promise<OnboardingState> {
+  const userId = await requireUserId();
+  await updateProfile(userId, {
+    onboarding_completed: true,
+    onboarding_step: 4,
+  });
+  cookies().set("echo_onboarding_user", userId, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 30,
+  });
+  redirect("/dashboard");
+}
+
+export async function saveFirstPostAsDraft(post: string): Promise<{
+  id?: string;
+  error?: string;
+}> {
+  try {
+    const userId = await requireUserId();
+    const content = post.trim();
+    if (!content) return { error: "Le post est vide." };
+
+    const supabase = createAdminClient();
+    const { data, error } = await supabase
+      .from("posts")
+      .insert({
+        user_id: userId,
+        title: "Premier post Echo",
+        content,
+        status: "ready",
+      })
+      .select("id")
+      .single();
+
+    if (error) {
+      return { error: `Impossible d'enregistrer le post : ${error.message}` };
+    }
+
+    await updateProfile(userId, {
+      onboarding_completed: true,
+      onboarding_step: 4,
+    });
     cookies().set("echo_onboarding_user", userId, {
       httpOnly: true,
       sameSite: "lax",
@@ -186,6 +154,27 @@ export async function completeOnboarding(
       path: "/",
       maxAge: 60 * 60 * 24 * 30,
     });
+
+    return { id: data.id as string };
+  } catch (error) {
+    return {
+      error:
+        error instanceof Error
+          ? error.message
+          : "Impossible d'enregistrer le premier post.",
+    };
   }
-  redirect("/dashboard");
+}
+
+// Compatibilité avec l'ancien composant OnboardingForm, conservé dans le repo.
+export async function saveOnboardingProgress(
+  _formData?: FormData
+): Promise<OnboardingState> {
+  return { error: "Cet onboarding a été remplacé par le flow premier post." };
+}
+
+export async function completeOnboarding(
+  _formData?: FormData
+): Promise<OnboardingState> {
+  return completeFirstPostOnboarding();
 }
