@@ -43,7 +43,7 @@ Le non réflexe coûte cher.`,
     role: "Freelance marketing digital",
     content: `Personne ne m'a appris à facturer. J'ai appris à mes dépens.
 
-An 1 : taux trop bas, négociations, retards de paiement.
+Première année : taux trop bas, négociations, retards de paiement.
 
 Ce que j'ai changé :
 → Forfaits uniquement

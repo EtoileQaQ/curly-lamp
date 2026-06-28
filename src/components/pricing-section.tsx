@@ -13,7 +13,7 @@ export function PricingSection() {
   // Pro : -20% en annuel (19€ → 15,20€/mois, facturé 182€/an).
   const pro = annual
     ? { price: "15,20€", old: "19€", note: "soit 182€ facturés par an" }
-    : { price: "19€", old: "39€", note: "" };
+    : { price: "19€", old: "", note: "" };
 
   async function handleProCheckout() {
     setLoading(true);
@@ -140,9 +140,9 @@ export function PricingSection() {
                   "Posts illimités pour publier sans compter",
                   "Mémoire éditoriale enrichie avec ton style et tes angles",
                   "Dialogue anti-générique pour obtenir des posts plus incarnés",
-                  "Score dwell time pour améliorer avant de publier",
-                  "Garde-fou thématique pour éviter de tourner en rond",
-                  "Repurposing pour transformer notes, articles ou transcripts",
+                  "Calcul du potentiel de lecture pour améliorer avant de publier",
+                  "Proposition de thèmes pour éviter de tourner en rond",
+                  "Repurposing pour transformer notes ou articles en posts",
                   "Visuels LinkedIn prêts à utiliser",
                 ].map((f) => (
                   <li key={f} className="flex items-center gap-2">
