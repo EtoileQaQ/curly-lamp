@@ -64,7 +64,7 @@ export function LinkedInPostMockup({
   comments,
 }: LinkedInPostMockupProps) {
   return (
-    <article className="flex h-full max-w-[480px] flex-col rounded-xl border border-[#e0e0e0] bg-white p-5 shadow-md">
+    <article className="flex h-full w-full max-w-[480px] flex-col overflow-hidden rounded-xl border border-[#e0e0e0] bg-white p-5 shadow-md">
       <header className="flex items-start gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-sm font-bold text-slate-500">
           {initials}
@@ -81,15 +81,27 @@ export function LinkedInPostMockup({
 
       <div className="my-4 h-px bg-[#e5e5e5]" />
 
-      <p className="whitespace-pre-line text-sm leading-6 text-[#222]">{content}</p>
+      <div className="relative max-h-[360px] overflow-hidden">
+        <p className="whitespace-pre-line text-sm leading-6 text-[#222]">
+          {content}
+        </p>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white via-white/95 to-transparent" />
+      </div>
+
+      <button
+        type="button"
+        className="mt-2 w-fit text-xs font-semibold text-[#0A66C2]"
+      >
+        Voir plus
+      </button>
 
       <footer className="mt-auto pt-5 text-xs text-[#666]">
-        <div className="flex items-center gap-4 border-t border-[#e5e5e5] pt-3">
-          <span className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#e5e5e5] pt-3">
+          <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap">
             <ThumbIcon />
             {reactions}
           </span>
-          <span className="flex items-center gap-1.5">
+          <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap">
             <CommentIcon />
             {comments}
           </span>
