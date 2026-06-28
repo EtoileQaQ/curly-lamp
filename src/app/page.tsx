@@ -11,13 +11,35 @@ const POSTS = [
     initials: "MD",
     name: "Marie D.",
     role: "Consultante RH indépendante",
-    content: `J'ai mis 3 ans à comprendre pourquoi mes recrutements échouaient.
+    content: `Un brief mal posé coûte plus cher qu'un mauvais recrutement.
 
-Ce n'était pas le profil. Ce n'était pas le salaire. C'était le brief.
+J'ai mis 3 ans à comprendre ça.
 
-Quand le manager ne sait pas ce qu'il cherche, personne ne peut recruter correctement.
+Pendant longtemps, quand un placement échouait, je cherchais l'erreur au mauvais endroit :
+— Le profil n'était pas le bon ?
+— Le salaire trop bas ?
+— Le candidat pas assez solide ?
 
-Aujourd'hui : 80% de mes placements tiennent au-delà de 6 mois.`,
+En réalité, le problème était toujours en amont.
+
+Quand le manager ne sait pas ce qu'il cherche vraiment, personne ne peut recruter correctement.
+Pas moi. Pas son équipe. Personne.
+
+Un brief flou, c'est un poste ouvert deux fois.
+C'est un onboarding raté.
+C'est 6 mois de salaire partis en fumée.
+C'est une équipe déstabilisée.
+
+Alors maintenant, avant de chercher le moindre profil, je prends le temps d'un vrai travail sur le brief.
+Quelle est la vraie douleur du manager ?
+Qu'est-ce qu'il a essayé avant ?
+Qu'est-ce qui a échoué — et pourquoi ?
+
+Ce n'est pas glamour. Ce n'est pas ce que les managers attendent quand ils appellent.
+Mais c'est ce qui fait que 80% de mes placements tiennent au-delà de 6 mois.
+
+Le recrutement ne commence pas avec la recherche de candidats.
+Il commence avec la qualité des questions qu'on pose au client.`,
     reactions: 47,
     comments: "12 commentaires",
   },
@@ -27,13 +49,33 @@ Aujourd'hui : 80% de mes placements tiennent au-delà de 6 mois.`,
     role: "Dirigeant TPE, bâtiment",
     content: `On a failli refuser notre plus gros contrat de l'année.
 
-Le client voulait 10 jours. On était à 3 semaines minimum.
+Le client voulait une livraison en 10 jours.
+Nous, on était à 3 semaines minimum.
 
-Au lieu de dire non : livraison partielle à J+10, le reste à J+21.
+Réflexe classique : on prépare le mail pour décliner.
 
-Il a dit oui. Il nous a recommandés deux fois depuis.
+Mais avant d'envoyer, on s'est posé une question simple :
+« Est-ce qu'il y a une autre façon de lui dire oui ? »
 
-Le non réflexe coûte cher.`,
+On lui a proposé une livraison partielle à J+10, le reste à J+21.
+
+Il a accepté sans hésiter.
+
+Depuis, il nous a recommandés deux fois.
+
+---
+
+Dans le bâtiment, on a des contraintes réelles.
+Des délais, des équipes, des chantiers qui s'enchaînent.
+
+Mais entre « non » et « oui sans réfléchir », il y a souvent une troisième voie.
+Celle qui demande 10 minutes de réflexion et qui change tout.
+
+Le non réflexe, ça protège à court terme.
+Ça coûte cher à long terme.
+
+Depuis que j'ai compris ça, ma façon de gérer les clients — et mes équipes — a changé.
+La flexibilité, dans mon expérience, ça se rend toujours au centuple.`,
     reactions: 63,
     comments: "18 commentaires",
   },
@@ -41,16 +83,36 @@ Le non réflexe coûte cher.`,
     initials: "LR",
     name: "Lucie R.",
     role: "Freelance marketing digital",
-    content: `Personne ne m'a appris à facturer. J'ai appris à mes dépens.
+    content: `J'ai passé des mois à planifier ma stratégie LinkedIn.
 
-Première année : taux trop bas, négociations, retards de paiement.
+Des tableaux Notion bien rangés. Des idées de posts organisées par thématiques. Un calendrier éditorial aux petits oignons.
 
-Ce que j'ai changé :
-→ Forfaits uniquement
-→ Acompte 50% à la commande
-→ Relance auto à J+3
+Et zéro prospect.
 
-Zéro impayé depuis 14 mois.`,
+Pourquoi ? Parce que je n'ai jamais vraiment posté.
+
+C'est ça, le piège de la surplanification.
+
+On se cache derrière un faux perfectionnisme pour éviter de se confronter à la réalité : poster, c'est s'exposer. Et s'exposer, ça fait peur.
+
+J'ai fini par comprendre que toute cette organisation, c'était une façon détournée de rester dans l'inaction confortablement.
+
+Si vous vous reconnaissez là-dedans, voici ce que j'aurais aimé qu'on me dise :
+
+➡️ Un post imparfait publié aujourd'hui vaut 10 posts parfaits qui restent dans vos brouillons.
+
+LinkedIn ne récompense pas ceux qui planifient le mieux.
+Il récompense ceux qui publient régulièrement, même maladroitement.
+
+Votre prochaine vente, votre prochain client, votre prochain contrat… il ne viendra pas d'un tableau Notion bien structuré.
+
+Il viendra d'un post que quelqu'un a lu, qui a résonné, qui a donné envie de vous contacter.
+
+Alors oui, planifiez. Mais postez d'abord.
+
+💬 Et vous, qu'est-ce qui vous bloque vraiment au moment de publier ?
+
+#LinkedIn #Freelance #PersonalBranding #ProspectionDigitale #ContentMarketing`,
     reactions: 91,
     comments: "24 commentaires",
   },
