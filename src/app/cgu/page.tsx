@@ -14,10 +14,10 @@ export default function CguPage() {
       updated="23 juin 2026"
     >
       <p>
-      Les présentes Conditions Générales de Vente (ci-après dénommées "CGV") et Conditions Générales d'Utilisation (ci-après dénommées "CGU")
-      définissent les modalités selon lesquelles Echo (ci-après dénommée l&apos;”Entreprise") 
+      Les présentes Conditions Générales de Vente (ci-après dénommées &ldquo;CGV&rdquo;) et Conditions Générales d&apos;Utilisation (ci-après dénommées &ldquo;CGU&rdquo;)
+      définissent les modalités selon lesquelles Echo (ci-après dénommée l&apos;Entreprise) 
       fournit ses services d&apos;abonnements annuels et mensuels à destination des entreprises 
-      ou micro-entreprises (ci-après dénommées les “Clients"). 
+      ou micro-entreprises (ci-après dénommées les &ldquo;Clients&rdquo;). 
       {""}
       Ces CGV régissent l&apos;ensemble des relations contractuelles entre l&apos;Entreprise et ses Clients. 
       Les CGV prévalent sur l&apos;ensemble des échanges ayant eu cours entre l&apos;Entreprise et ses Clients,
@@ -104,7 +104,7 @@ export default function CguPage() {
       4.2.5 En outre, en cas de défaut de paiement persistant au-delà d&apos;une période raisonnable, 
       l&apos;Entreprise se réserve le droit de suspendre temporairement l&apos;accès aux Services fournis 
       dans le cadre de l&apos;Abonnement jusqu&apos;à ce que le paiement soit effectué. 
-      Cette suspension n&apos;exempte pas le  Client de son obligation de paiement pour la période d'abonnement en cours. 
+      Cette suspension n&apos;exempte pas le  Client de son obligation de paiement pour la période d&apos;abonnement en cours. 
       </p>
 
       <p>
@@ -153,12 +153,12 @@ export default function CguPage() {
       <p>
       5.2.4 À la fin de la période d&apos;engagement en cours, l&apos;Abonnement sera automatiquement 
       renouvelé pour une période équivalente, 
-      sauf résiliation conforme aux dispositions de l'article 5.2 des présentes Conditions Générales de Vente.
+      sauf résiliation conforme aux dispositions de l&apos;article 5.2 des présentes Conditions Générales de Vente.
       </p>
 
       <h2>6. Confidentialité et Données Personnelles </h2>
       <p>6.1 L&apos;Entreprise s&apos;engage à traiter les données personnelles conformément à sa Politique de Confidentialité.</p>
-      <p>6.2 Le Client reconnaît que certaines données personnelles seront collectées dans le cadre de l'utilisation des 
+      <p>6.2 Le Client reconnaît que certaines données personnelles seront collectées dans le cadre de l&apos;utilisation des 
       services et consent à leur traitement conformément à ladite Politique de Confidentialité.</p>
 
       <h2>7. Responsabilité</h2>
@@ -236,8 +236,8 @@ export default function CguPage() {
       10.2 L&apos;Entreprise se réserve le droit de modifier les présentes CGU à tout moment. 
       Vous reconnaissez que ces dernières vous sont opposables. Nous essayons de prévenir 
       rapidement les utilisateurs lors de changements majeurs sur les CGU par mail et au sein de Echo. 
-      Si vous n'êtes pas d'accord avec une modification des CGU, n&apos;hésitez pas à nous en faire part, 
-      nous vous expliquerons nos choix, mais votre seul recours est de ne plus utiliser les services de l'Entreprise. 
+      Si vous n&apos;êtes pas d&apos;accord avec une modification des CGU, n&apos;hésitez pas à nous en faire part, 
+      nous vous expliquerons nos choix, mais votre seul recours est de ne plus utiliser les services de l&apos;Entreprise. 
       Votre utilisation des services de l&apos;Entreprise après la date de publication des CGU modifiées constitue 
       votre acceptation de ces dernières.
       </p>
@@ -254,9 +254,9 @@ export default function CguPage() {
       11.1 Contenu des Utilisateurs : En utilisant les Services d&apos;Echo, vous pouvez créer, télécharger, 
       publier, soumettre ou transmettre du contenu, y compris, mais sans s&apos;y limiter, des messages,
        des textes, des photos, des vidéos, des liens et d&apos;autres types de matériel 
-       (ci-après dénommé le "Contenu des Utilisateurs"). Vous conservez tous les droits de propriété 
+       (ci-après dénommé le &ldquo;Contenu des Utilisateurs&rdquo;). Vous conservez tous les droits de propriété 
        intellectuelle sur votre Contenu des Utilisateurs. Cependant, en soumettant ou en affichant 
-       votre Contenu d'Utilisateur sur ou via les Services d&apos;Echo, vous accordez à Echo une licence mondiale et 
+       votre Contenu d&apos;Utilisateur sur ou via les Services d&apos;Echo, vous accordez à Echo une licence mondiale et 
        non exclusive pour distribuer et afficher publiquement votre Contenu des Utilisateurs sur
         vos comptes Utilisateurs sur le réseau social LinkedIn.
       </p>
@@ -267,7 +267,7 @@ export default function CguPage() {
       les brevets ou tout autre droit de propriété intellectuelle d&apos;un tiers.
       </p>
       <p>
-      11.3 Responsabilités des Utilisateurs : En utilisant les Services d'Echo, vous acceptez de ne pas :
+      11.3 Responsabilités des Utilisateurs : En utilisant les Services d&apos;Echo, vous acceptez de ne pas :
       </p>
       <ul>
       <li>
@@ -325,7 +325,7 @@ export default function CguPage() {
       </p>
       <p>
       13.2 Les marques, logos, signes, ainsi que l&apos;ensemble des contenus de l&apos;application (textes, images, son...)
-       font l&apos;objet d'une protection en vertu du Code de la propriété intellectuelle et plus particulièrement
+       font l&apos;objet d&apos;une protection en vertu du Code de la propriété intellectuelle et plus particulièrement
       du droit d&apos;auteur. L&apos;Utilisateur doit solliciter l&apos;autorisation préalable de toute l&apos;équipe
       Echo pour toute reproduction, publication, copie des différents contenus. Il s&apos;engage à utiliser
       les contenus de l&apos;application dans un cadre strictement privé, toute utilisation à des fins

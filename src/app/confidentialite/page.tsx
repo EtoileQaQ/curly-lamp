@@ -31,7 +31,7 @@ export default function ConfidentialitePage() {
         de la réglementation en vigueur et des principes de protection de la vie privée. 
         Les données sont utilisées pour fournir nos services de community management, 
         conformément aux engagements pris envers nos clients.
-        </>
+        </p>
 
         <h3>2.1 - Utilisation des données</h3>
         <p>Les données collectées sont utilisées pour les finalités suivantes :</p>
@@ -116,7 +116,7 @@ export default function ConfidentialitePage() {
       La totalité de nos droits et obligations dans le cadre de notre Politique de confidentialité
        est librement transférable par nous à toute société affiliée dans le cadre d&apos;une fusion, 
        d&apos;une acquisition, d&apos;une restructuration ou d&apos;une vente d&apos;actifs, d&apos;une demande des t
-       ribunaux ou dans d'autres cas, et nous pouvons transférer vos informations à nos sociétés 
+       ribunaux ou dans d&apos;autres cas, et nous pouvons transférer vos informations à nos sociétés 
        affiliées, successeurs ou nouveaux propriétaires.
       </p>
 
